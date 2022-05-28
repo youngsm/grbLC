@@ -17,14 +17,6 @@ def check_header(path, n=None, debug=False, more_than_one_row=False):
     """
     This monstrosity returns what line a header is at
     """
-    with open(path) as f:
-        lines = f.readlines()
-
-    if isinstance(n, int) and n > len(lines):
-        raise Exception(f"Error in file ({path})! Something wrong "
-                         "is going on here and I can't find the "
-                         "header row for this file")
-
     try:
         # attempt importing the datafile with the header "n"
         df = pd.read_csv(path, delimiter=r"\t+|\s+", header=n, engine="python")
@@ -45,10 +37,9 @@ def check_header(path, n=None, debug=False, more_than_one_row=False):
 
     h = df.columns
 
-
     # todo: if header is Int64Index, check the 2nd row (i.e. first row of data for the not isfloat)
     # ... so maybe change the h in [not isfloat(x) for x in h] to the second row???
-    if isinstance(h, type(pd.Index([], dtype=int))) or sum(isfloat(x) for x in h) >= 0.3 * len(h) // 1:
+    if isinstance(h, pd.Index) or sum(isfloat(x) for x in h) >= 0.3 * len(h) // 1:
         if debug:
             print("Some are floats...")
 
@@ -59,14 +50,12 @@ def check_header(path, n=None, debug=False, more_than_one_row=False):
         return n  # <-- the final stop in our recursion journey
 
 
-
-
 def check_datatype(filename):
     """
     Given a filename, try and guess what dataset the data comes from
     (e.g., Si, Kann, Oates, etc.)
 
-    For example, a file named `*_Oates.txt` will be interpreted as data in the same format
+    For example, a file named '*_Oates.txt' will be interpreted as data in the same format
     as Sam Oates' data.
 
     """
@@ -98,20 +87,23 @@ def check_datatype(filename):
 
     elif check("wczytywanie") or check("block"):
         datatype = "wczytywanie"
-
+    
+    elif check("converted"):
+        datatype = "GCN"
+    
     else:
         datatype = "si"
 
     return datatype
 
 
-def read_data(path, datatype="", header=-999, debug=False):
+def read_data(path, datatype="", debug=False):
     data = {}
 
     if debug:
         print("First 10 Lines:\n", "".join(open(path).readlines()[:10]))
 
-    header = check_header(path) if header==-999 else header
+    header = check_header(path)
 
     if header == -1:
         return
@@ -143,9 +135,9 @@ def read_data(path, datatype="", header=-999, debug=False):
     elif datatype == "oates":
 
         time = df[h[0]]
-        flux = df[h[1]]
-        maxflux = df[h[2]]
-        minflux = df[h[3]]
+        flux = df[h[2]]
+        maxflux = df[h[3]]
+        minflux = df[h[4]]
         fluxerr = (maxflux - minflux) / (2 * 1.65)
 
     elif datatype in ["combined", "comb"]:
@@ -162,10 +154,20 @@ def read_data(path, datatype="", header=-999, debug=False):
         minflux = df[h[5]]
         fluxerr = (maxflux - minflux) / (2 * 1.65)
 
+    elif datatype == 'GCN':
+        time = df[h[0]]
+        flux = df[h[1]]
+        fluxerr = df[h[2]]
+        band = df[h[3]]
+        source = df[h[4]]
+        
     else:
-        if debug:
-            print('No datatype found. Assuming format: | time | flux | fluxerr |')
-        return read_data(path, datatype='si', header=header, debug=debug)
+        # if debug:
+        # print('No datatype found. Assuming format:\n| time | flux | fluxerr |')
+        # read_data(path, datatype='si', debug=debug)
+        time = np.array([1])
+        flux = np.array([1])
+        fluxerr = np.array([0])
 
     try:
         logtime = np.log10(time)
@@ -175,11 +177,14 @@ def read_data(path, datatype="", header=-999, debug=False):
     logflux = np.log10(flux)
     logfluxerr = fluxerr / (flux * np.log(10))
 
-    if all(time > 0) and all(flux > 0):
-        data["time_sec"] = logtime
-        data["flux"] = logflux
-        data["flux_err"] = logfluxerr
-        # data["band"] = ["R" for _ in logtime]
+    if all(time > 0):
+        data["time_sec"] = time
+        data["flux"] = flux
+        data["flux_err"] = fluxerr
+        try :
+            data["band"] = band
+        except NameError:
+            data["band"] = ["NA" for _ in logtime]
     else:
         raise ImportError("Some logT's are < 0... Ahh!")
 
