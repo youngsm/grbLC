@@ -111,6 +111,13 @@ def read_data(path, datatype="", debug=False):
     df = pd.read_csv(path, delimiter=r"\t+|\s+", header=header, engine="python")
     header = h = df.columns
 
+    if type(df[h[0]][0])==str :
+        if df[h[0]][0].replace('.','',1).isdigit():
+            pass
+        else:
+            df = pd.read_csv(path, delimiter=r"\t+|\s+", header=check_header(path), engine="python",skiprows=[0])
+            header = h = df.columns
+
     filename = os.path.split(path)[-1].lower()
     datatype = datatype.lower() if datatype else check_datatype(filename)
     if datatype in ["si", "liang", "combinedrest"]:
