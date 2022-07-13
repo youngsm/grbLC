@@ -1,0 +1,1455 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>grblc.fitting.lightcurve &mdash; grbLC 0.1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/jupyter-sphinx.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/thebelab.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> grbLC
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">grblc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">grbLC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>grblc.fitting.lightcurve</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for grblc.fitting.lightcurve</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">mkdir</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+
+<span class="kn">import</span> <span class="nn">lmfit</span> <span class="k">as</span> <span class="nn">lf</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="kn">import</span> <span class="n">Figure</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">io</span>
+<span class="kn">from</span> <span class="nn">..util</span> <span class="kn">import</span> <span class="n">get_dir</span>
+<span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="n">chisq</span>
+<span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="n">Model</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Lightcurve&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Lightcurve"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve">[docs]</a><span class="k">class</span> <span class="nc">Lightcurve</span><span class="p">:</span>
+    <span class="n">_name_placeholder</span> <span class="o">=</span> <span class="s2">&quot;unknown grb&quot;</span>
+    <span class="n">_flux_fixed_inplace</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">xdata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">ydata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">xerr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">yerr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">data_space</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;log&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">Model</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">fix_flux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">attrs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The main module for fitting lightcurves.</span>
+
+<span class="sd">        .. warning::</span>
+<span class="sd">            Data stored in :py:class:`Lightcurve` objects are always in logarithmic</span>
+<span class="sd">            space; the parameter ``data_space`` is only used to convert data to log space</span>
+<span class="sd">            if it is not already in such. If your data is in linear space [i.e., your</span>
+<span class="sd">            time data is sec, and not \(log\)(sec)], then you should set ``data_space``</span>
+<span class="sd">            to ``lin``.</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str, optional</span>
+<span class="sd">            Name of file containing light curve data, by default None</span>
+<span class="sd">        xdata : array_like, optional</span>
+<span class="sd">            X values, length (n,), by default None</span>
+<span class="sd">        ydata : array_like, optional</span>
+<span class="sd">            Y values, by default None</span>
+<span class="sd">        xerr : array_like, optional</span>
+<span class="sd">            X error, by default None</span>
+<span class="sd">        yerr : array_like, optional</span>
+<span class="sd">            Y error, by default None</span>
+<span class="sd">        data_space : str, {log, lin}, optional</span>
+<span class="sd">            Whether the data inputted is in log or linear space, by default &#39;log&#39;</span>
+<span class="sd">        name : str, optional</span>
+<span class="sd">            Name of the GRB, by default :py:class:`Model` name, or ``unknown grb`` if not</span>
+<span class="sd">            provided.</span>
+<span class="sd">        model : :py:class:`Model`, optional</span>
+<span class="sd">            :py:class:`Model` to use in lightcurve fitting, by default None</span>
+<span class="sd">        fix_flux : bool, optional</span>
+<span class="sd">            In some fits, the actual flux at the end of the plateau is not the fitted value</span>
+<span class="sd">            F. This applies the necessary corrections to the fitted values to account for</span>
+<span class="sd">            this discrepancy. Note this only works for the :py:meth:`Model.W07` and</span>
+<span class="sd">            :py:meth:`Model.SMOOTH_BPL` models.</span>
+<span class="sd">        attrs : dict, optional</span>
+<span class="sd">            A :py:class:`dict` of array_like objects with length (n,) with</span>
+<span class="sd">            any additional attributes (e.g., band) for each datapoint, by default {}.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">bool</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span>
+            <span class="n">xdata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ydata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">),</span> <span class="s2">&quot;Either provide a filename or xdata, ydata.&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="n">attrs</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name_placeholder</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">read_data</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">data_space</span><span class="o">=</span><span class="n">data_space</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span>
+                <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">,</span>
+                <span class="p">[</span>
+                    <span class="n">get_dir</span><span class="p">(),</span>
+                    <span class="s2">&quot;lightcurves&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_flux.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">)),</span>
+                <span class="p">],</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="n">xerr</span><span class="p">,</span> <span class="n">yerr</span><span class="p">,</span> <span class="n">data_space</span><span class="o">=</span><span class="n">data_space</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fix_flux</span> <span class="o">=</span> <span class="n">fix_flux</span>
+
+<div class="viewcode-block" id="Lightcurve.set_bounds"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.set_bounds">[docs]</a>    <span class="k">def</span> <span class="nf">set_bounds</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the bounds on the xdata and ydata to (1) plot and (2) fit with. Either</span>
+<span class="sd">            provide bounds or xmin, xmax, ymin, ymax. Assumes data is already in log</span>
+<span class="sd">            space. If :py:meth:`Lightcurve.set_data` has been called, then the data</span>
+<span class="sd">            has already been converted to log space.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bounds : array_like of length 4, optional</span>
+<span class="sd">            Bounds on inputted x and y-data, by default None</span>
+<span class="sd">        xmin : float, optional</span>
+<span class="sd">            Minimum x, by default -np.inf</span>
+<span class="sd">        xmax : float, optional</span>
+<span class="sd">            Maximum x, by default np.inf</span>
+<span class="sd">        ymin : float, optional</span>
+<span class="sd">            Minimum y, by default -np.inf</span>
+<span class="sd">        ymax : float, optional</span>
+<span class="sd">            Maximum y, by default np.inf</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># assert that either bounds or any of xmin, xmax, ymin, ymax is not None,</span>
+        <span class="c1"># but prohibiting both to be true</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">bounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="o">^</span> <span class="nb">any</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">]</span>
+        <span class="p">),</span> <span class="s2">&quot;Must provide bounds or xmin, xmax, ymin, ymax.&quot;</span>
+
+        <span class="k">if</span> <span class="n">bounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="n">bounds</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">]):</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+
+        <span class="n">xmask</span> <span class="o">=</span> <span class="p">(</span><span class="n">xmin</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xdata</span> <span class="o">&lt;=</span> <span class="n">xmax</span><span class="p">)</span>
+        <span class="n">ymask</span> <span class="o">=</span> <span class="p">(</span><span class="n">ymin</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ydata</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ydata</span> <span class="o">&lt;=</span> <span class="n">ymax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">xmask</span> <span class="o">&amp;</span> <span class="n">ymask</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ydata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xerr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yerr</span><span class="p">,</span> <span class="n">data_space</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Lightcurve.set_data"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.set_data">[docs]</a>    <span class="k">def</span> <span class="nf">set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="n">xerr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_space</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the `xdata` and `ydata`, and optionally `xerr` and `yerr` of the lightcurve.</span>
+
+<span class="sd">        .. warning::</span>
+<span class="sd">            Data stored in :py:class:`Lightcurve` objects are always in logarithmic</span>
+<span class="sd">            space; the parameter ``data_space`` is only used to convert data to log space</span>
+<span class="sd">            if it is not already in such. If your data is in linear space [i.e., your</span>
+<span class="sd">            time data is sec, and not log(sec)], then you should set ``data_space``</span>
+<span class="sd">            to ``lin``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        xdata : array_like</span>
+<span class="sd">            X data</span>
+<span class="sd">        ydata : array_like</span>
+<span class="sd">            Y data</span>
+<span class="sd">        xerr : array_like, optional</span>
+<span class="sd">            X error, by default None</span>
+<span class="sd">        yerr : array_like, optional</span>
+<span class="sd">            Y error, by default None</span>
+<span class="sd">        data_space : str, {log, lin}, optional</span>
+<span class="sd">            Whether the data inputted is in logarithmic or linear space, by default &#39;log&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;mask&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xdata</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">convert_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">data_space</span> <span class="o">==</span> <span class="s2">&quot;lin&quot;</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">data_space</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">data</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;data_space must be &#39;log&#39; or &#39;lin&#39;&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">convert_err</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">err</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">data_space</span> <span class="o">==</span> <span class="s2">&quot;lin&quot;</span><span class="p">:</span>
+                <span class="n">eps</span> <span class="o">=</span> <span class="n">err</span> <span class="o">/</span> <span class="p">(</span><span class="n">data</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">data_space</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
+                <span class="n">eps</span> <span class="o">=</span> <span class="n">err</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;data_space must be &#39;log&#39; or &#39;lin&#39;&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">eps</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">orig_xdata</span> <span class="o">=</span> <span class="n">convert_data</span><span class="p">(</span><span class="n">xdata</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orig_ydata</span> <span class="o">=</span> <span class="n">convert_data</span><span class="p">(</span><span class="n">ydata</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xdata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orig_xdata</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ydata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orig_ydata</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orig_xerr</span> <span class="o">=</span> <span class="n">convert_err</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">xerr</span><span class="p">)</span> <span class="k">if</span> <span class="n">xerr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orig_yerr</span> <span class="o">=</span> <span class="n">convert_err</span><span class="p">(</span><span class="n">ydata</span><span class="p">,</span> <span class="n">yerr</span><span class="p">)</span> <span class="k">if</span> <span class="n">yerr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xerr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orig_xerr</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">]</span> <span class="k">if</span> <span class="n">xerr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yerr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orig_yerr</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">]</span> <span class="k">if</span> <span class="n">yerr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Lightcurve.set_model"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.set_model">[docs]</a>    <span class="k">def</span> <span class="nf">set_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the lightcurve model to use.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : :py:class:`Model`</span>
+<span class="sd">            :py:class:`Model` to use in lightcurve fitting</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">res</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">figs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name_placeholder</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_bounds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_flux_fixed_inplace</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Lightcurve.exclude_range"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.exclude_range">[docs]</a>    <span class="k">def</span> <span class="nf">exclude_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xs</span><span class="o">=</span><span class="p">(),</span> <span class="n">ys</span><span class="o">=</span><span class="p">(),</span> <span class="n">data_space</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        `exclude_range` takes a range of x and y values and excludes them from the data</span>
+<span class="sd">        of the current lightcurve.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        xs : tuple of form (xmin, xmax), optional</span>
+<span class="sd">            Range along the x-axis to exclude.</span>
+<span class="sd">        ys : tuple of form (ymin, ymax), optional</span>
+<span class="sd">            Range along the y-axis to exclude.</span>
+<span class="sd">        data_space : str, {log, lin}, optional</span>
+<span class="sd">            Whether you&#39;d like to exclude in logarithmic or linear space, by default &#39;log&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">xs</span> <span class="o">==</span> <span class="p">[]</span> <span class="ow">and</span> <span class="n">ys</span> <span class="o">==</span> <span class="p">[]:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">xs</span> <span class="o">==</span> <span class="p">():</span>
+            <span class="n">xs</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ys</span> <span class="o">==</span> <span class="p">():</span>
+            <span class="n">ys</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;xs and ys must be tuples of length 2&quot;</span>
+
+        <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">xs</span>
+        <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">ys</span>
+        <span class="n">xmask</span> <span class="o">=</span> <span class="p">(</span><span class="n">xmin</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orig_xdata</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">orig_xdata</span> <span class="o">&lt;=</span> <span class="n">xmax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">xmask</span>
+        <span class="n">ymask</span> <span class="o">=</span> <span class="p">(</span><span class="n">ymin</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orig_ydata</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">orig_ydata</span> <span class="o">&lt;=</span> <span class="n">ymax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">ymask</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ydata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xerr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yerr</span><span class="p">,</span> <span class="n">data_space</span><span class="o">=</span><span class="n">data_space</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Lightcurve.read_data"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.read_data">[docs]</a>    <span class="k">def</span> <span class="nf">read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Reads in data from a file. The data must be in the correct format.</span>
+<span class="sd">            See the :py:meth:`io.read_data` for more information.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ----------</span>
+<span class="sd">        xdata, ydata, xerr, yerr : array_like</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">read_data</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="n">xdata</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;time_sec&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">ydata</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;flux&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">xerr</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">yerr</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;flux_err&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="n">xerr</span><span class="p">,</span> <span class="n">yerr</span></div>
+
+<div class="viewcode-block" id="Lightcurve.show_data"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.show_data">[docs]</a>    <span class="k">def</span> <span class="nf">show_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fig_kwargs</span><span class="o">=</span><span class="p">{},</span> <span class="n">save_kwargs</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Plots the lightcurve data. If no fit has been ran, :py:meth:`Lightcurve.show` will call</span>
+<span class="sd">            this function.</span>
+
+<span class="sd">            .. note:: This doesn&#39;t plot any fit results. Use :py:meth:`Lightcurve.show_fit` to do so.</span>
+
+<span class="sd">            Example:</span>
+
+<span class="sd">            .. jupyter-execute::</span>
+
+<span class="sd">                import numpy as np</span>
+<span class="sd">                from grblc.fitting import Model, Lightcurve</span>
+
+<span class="sd">                model = Model.W07(vary_t=False)</span>
+<span class="sd">                xdata = np.linspace(0, 10, 15)</span>
+<span class="sd">                yerr = np.random.normal(0, 0.5, len(xdata))</span>
+<span class="sd">                ydata = model(xdata, 5, -12, 1.5, 0) + yerr</span>
+<span class="sd">                lc = Lightcurve(xdata=xdata, ydata=ydata, yerr=yerr, model=model)</span>
+<span class="sd">                lc.show_data()</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fig_kwargs : dict, optional</span>
+<span class="sd">            Arguments to pass to ``plt.figure()``, by default {}.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">fig_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">fig_kwargs</span><span class="p">):</span>
+            <span class="n">fig_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">fig_kwargs</span><span class="p">)</span>
+        <span class="n">plot_fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="o">**</span><span class="n">fig_dict</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">bounds</span>
+        <span class="n">logT</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orig_xdata</span>
+        <span class="n">logF</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orig_ydata</span>
+        <span class="n">logTerr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orig_xerr</span>
+        <span class="n">logFerr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orig_yerr</span>
+
+        <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">logT</span> <span class="o">&gt;=</span> <span class="n">xmin</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">logT</span> <span class="o">&lt;=</span> <span class="n">xmax</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">logF</span> <span class="o">&gt;=</span> <span class="n">ymin</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">logF</span> <span class="o">&lt;=</span> <span class="n">ymax</span><span class="p">)</span>
+
+        <span class="c1"># plot all data points inside xmin and xmax in black</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+            <span class="n">logT</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span>
+            <span class="n">logF</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span>
+            <span class="n">xerr</span><span class="o">=</span><span class="n">logTerr</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="k">if</span> <span class="n">logTerr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">logTerr</span><span class="p">,</span>
+            <span class="n">yerr</span><span class="o">=</span><span class="n">logFerr</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="k">if</span> <span class="n">logFerr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">logFerr</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span>
+            <span class="n">ms</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">ax_xlim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+        <span class="n">ax_ylim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+
+        <span class="c1"># plot all data points outside of xmin and xmax in grey</span>
+        <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="o">~</span><span class="n">mask</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+                <span class="n">logT</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">],</span>
+                <span class="n">logF</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">],</span>
+                <span class="n">xerr</span><span class="o">=</span><span class="n">logTerr</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span> <span class="k">if</span> <span class="n">logTerr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">logTerr</span><span class="p">,</span>
+                <span class="n">yerr</span><span class="o">=</span><span class="n">logFerr</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span> <span class="k">if</span> <span class="n">logFerr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">logFerr</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span>
+                <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span>
+                <span class="n">ms</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">ax_xlim</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ax_ylim</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;log T (sec)&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;log F (erg cm$^{-2}$ s$^{-1}$)&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="c1"># if save:</span>
+        <span class="c1">#     savefig_kwargs = dict(</span>
+        <span class="c1">#         fname = self.slug</span>
+        <span class="c1">#     )</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_res</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">valuesdict</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ydata</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>
+
+<div class="viewcode-block" id="Lightcurve.fit"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">p0</span><span class="p">,</span>
+        <span class="n">run_mcmc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">minimize_kwargs</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">emcee_kwargs</span><span class="o">=</span><span class="p">{},</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Fits the lightcurve data to the model. There are two steps in this process:</span>
+
+<span class="sd">                #. Minimize the residuals using `Nelder-Mead` with</span>
+<span class="sd">                    :scipydoc:`optimize.minimize`</span>
+
+<span class="sd">                #. Probe the posterior distribution using `emcee &lt;https://emcee.readthedocs.io/en/stable/&gt;`_, a</span>
+<span class="sd">                    Markov-Chain Monte Carlo Python package, using the best-fit parameters from step 1 as the starting</span>
+<span class="sd">                    point. This is optional (via the ``run_mcmc`` parameter), but recommended, as it gives a better view</span>
+<span class="sd">                    of the errors on the best-fit parameters.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        p0 : array_list, length of number of parameters</span>
+<span class="sd">            Initial guess for the parameters.</span>
+<span class="sd">        run_mcmc : bool, optional</span>
+<span class="sd">            Whether to run the optional MCMC step, by default True</span>
+<span class="sd">        show : bool, optional</span>
+<span class="sd">            [description], by default False</span>
+<span class="sd">        minimize_kwargs : dict, optional</span>
+<span class="sd">            Keyword arguments to pass to</span>
+<span class="sd">            :scipydoc:`optimize.minimize`,</span>
+<span class="sd">            by default {}</span>
+<span class="sd">        emcee_kwargs : dict, optional</span>
+<span class="sd">            Keyword arguments to pass to</span>
+<span class="sd">            `lmfit.Minimizer.emcee &lt;https://lmfit.github.io/lmfit-py/fitting.html#lmfit.minimizer.Minimizer.emcee&gt;`_, by default {}</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        `lmfit.minimizer.MinimizerResult`</span>
+<span class="sd">            See `lmfit.Minimizer.MinimizerResult &lt;https://lmfit.github.io/lmfit-py/fitting.html#lmfit.minimizer.MinimizerResult&gt;`_ for more information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;No model set.&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">xdata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;xdata not supplied&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">ydata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;ydata not supplied&quot;</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ydata</span>
+        <span class="p">),</span> <span class="s2">&quot;xdata and ydata not the same shape&quot;</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;yerr&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yerr</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ydata</span>
+            <span class="p">),</span> <span class="s2">&quot;yerr not the same shape as input data&quot;</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;xerr&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xerr</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">xdata</span>
+            <span class="p">),</span> <span class="s2">&quot;xerr not the same shape as input data&quot;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">p0</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Initial guess not the same length as the number of arguments to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">p0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">p0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">min</span> <span class="ow">and</span> <span class="n">p0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">):</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initial guess </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">p0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2"> may not be on or outside the &quot;</span> \
+                              <span class="sa">f</span><span class="s2">&quot;bounds (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="si">}</span><span class="s2"> &lt; </span><span class="si">{</span><span class="n">p0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">) &lt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="si">}</span><span class="s2">). Moving &quot;</span> \
+                              <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&#39; slightly inwards by 1e-5.&quot;</span><span class="p">,</span> <span class="ne">UserWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">):</span>
+                        <span class="n">p0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="mf">1e-5</span>
+                    <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">):</span>
+                        <span class="n">p0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">min</span> <span class="o">+</span> <span class="mf">1e-5</span>
+                    <span class="k">elif</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">min</span> <span class="o">-</span> <span class="n">p0</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="n">p0</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                        <span class="n">p0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">min</span> <span class="o">+</span> <span class="mf">1e-5</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">p0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="mf">1e-5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_flux_fixed_inplace</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">err</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">err</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">xerr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yerr</span><span class="p">]</span> <span class="k">if</span> <span class="n">err</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">],</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">Parameters</span><span class="p">()</span>
+        <span class="n">param_details</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span>
+                <span class="n">p</span><span class="p">,</span>
+                <span class="n">p0</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">vary</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">add_many</span><span class="p">(</span><span class="o">*</span><span class="n">param_details</span><span class="p">)</span>
+
+        <span class="n">minimizer</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">Minimizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_res</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">nan_policy</span><span class="o">=</span><span class="s2">&quot;propagate&quot;</span><span class="p">)</span>
+
+        <span class="c1"># solve first with robust Nelder-Mead</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">res</span> <span class="o">=</span> <span class="n">mi1</span> <span class="o">=</span> <span class="n">minimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;leastsq&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">minimize_kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span>
+
+        <span class="k">if</span> <span class="n">run_mcmc</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;burn&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">emcee_kwargs</span><span class="p">:</span>
+                <span class="n">emcee_kwargs</span><span class="p">[</span><span class="s2">&quot;burn&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
+            <span class="k">if</span> <span class="s2">&quot;steps&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">emcee_kwargs</span><span class="p">:</span>
+                <span class="n">emcee_kwargs</span><span class="p">[</span><span class="s2">&quot;steps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5000</span>
+            <span class="k">if</span> <span class="s2">&quot;thin&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">emcee_kwargs</span><span class="p">:</span>
+                <span class="n">emcee_kwargs</span><span class="p">[</span><span class="s2">&quot;thin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
+
+            <span class="c1"># use emcee to probe posterior distribution</span>
+            <span class="c1"># and find best errors</span>
+            <span class="k">if</span> <span class="s2">&quot;progress&quot;</span> <span class="ow">in</span> <span class="n">emcee_kwargs</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running MCMC...&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">res</span> <span class="o">=</span> <span class="n">minimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+                <span class="n">method</span><span class="o">=</span><span class="s2">&quot;emcee&quot;</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">=</span><span class="n">mi1</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+                <span class="n">is_weighted</span><span class="o">=</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span>
+                <span class="o">**</span><span class="n">emcee_kwargs</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span>
+
+            <span class="c1"># find solution to MLE &amp; set it in self.params</span>
+            <span class="n">highest_prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">lnprob</span><span class="p">)</span>
+            <span class="n">highest_prob_loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span><span class="n">highest_prob</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">lnprob</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">mle_soln</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">chain</span><span class="p">[</span><span class="n">highest_prob_loc</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">vary</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">mle_soln</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+                    <span class="c1"># also, calculate standard errors from emcee</span>
+                    <span class="c1"># &amp; set in self.params</span>
+                    <span class="n">quantiles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">flatchain</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="p">[</span><span class="mf">15.865</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mf">84.135</span><span class="p">]</span>
+                    <span class="p">)</span>
+                    <span class="n">median</span> <span class="o">=</span> <span class="n">quantiles</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">errp</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">median</span> <span class="o">-</span> <span class="n">quantiles</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                    <span class="n">errm</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">median</span> <span class="o">-</span> <span class="n">quantiles</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">errp</span><span class="p">,</span> <span class="n">errm</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">show</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_fit</span><span class="p">()</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_flux</span><span class="p">:</span>
+            <span class="n">newF</span><span class="p">,</span> <span class="n">newFerr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_flux_corr</span><span class="p">()</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">newF</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">newFerr</span>
+
+        <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="Lightcurve.show_fit"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.show_fit">[docs]</a>    <span class="k">def</span> <span class="nf">show_fit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">detailed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">print_res</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show_corner</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">show_chisq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">save_plots</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">fix_flux</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">corner_kwargs</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">chisq_kwargs</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">fig_kwargs</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">residual_ax_kwargs</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">fit_ax_kwargs</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">data_kwargs</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">fit_kwargs</span><span class="o">=</span><span class="p">{},</span>
+    <span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Shows the fit to the data. If a fit has been ran, :py:meth:`Lightcurve.show`</span>
+<span class="sd">            will call this function.</span>
+
+<span class="sd">            This function can:</span>
+
+<span class="sd">                * Print the best-fit parameters and their errors. (`print_res`)</span>
+
+<span class="sd">                * Show the fit to the data. (`show_plot`)</span>
+
+<span class="sd">                * Show the corner plot of the posterior distribution of the parameters. (`show_corner`)</span>
+
+<span class="sd">                * Show the \(\Delta\chi^2\) confidence intervals of the fit. (`show_chisq`)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        detailed : bool, optional</span>
+<span class="sd">            Whether to use all plotting and printing capabilities available</span>
+<span class="sd">            to show the fit, by default False</span>
+<span class="sd">        print_res : bool, optional</span>
+<span class="sd">            Prints the fit result parameters and their errors, by default True</span>
+<span class="sd">        show_plot : bool, optional</span>
+<span class="sd">            Shows the lightcurve and fitted model, as well as residuals, by default True</span>
+<span class="sd">        show_corner : bool, optional</span>
+<span class="sd">            Whether to show the corner plot. Can only be used when `use_mcmc` was set</span>
+<span class="sd">            to True when calling :py:meth:`Lightcurve.fit`, by default False</span>
+<span class="sd">        show_chisq : bool, optional</span>
+<span class="sd">            Whether to show \(\Delta\chi^2\) confidence intervals, by default False</span>
+<span class="sd">        save_plots : bool or str, optional</span>
+<span class="sd">            If `bool`, whether to save the plots or not in a folder in the current</span>
+<span class="sd">            directory called `plots`. If `str`, the directory and filename to save plots</span>
+<span class="sd">            (e.g., ``../../fit/grb010222.pdf``), by default None</span>
+<span class="sd">        show : bool, optional</span>
+<span class="sd">            Whether you want `plt.show()` to be ran. If not true, the figures will be returned</span>
+<span class="sd">            as a dictionary, by default True</span>
+<span class="sd">        fix_flux : bool, optional</span>
+<span class="sd">            If provided, will apply the flux correction to the flux at the end of the plateau.</span>
+<span class="sd">            If not provided, will default to what user set in the constructor of the Lightcurve class.</span>
+<span class="sd">        corner_kwargs : dict, optional</span>
+<span class="sd">            Additional arguments to pass to :py:meth:`corner.corner`, by default {}</span>
+<span class="sd">        chisq_kwargs : dict, optional</span>
+<span class="sd">            Additional arguments to pass to ``plt.plot`` for the \(\Delta\chi^2\)</span>
+<span class="sd">            confidence interval plots, by default {}</span>
+<span class="sd">        fig_kwargs : dict, optional</span>
+<span class="sd">            Additional arguments to pass to ``plt.figure`` when showing the</span>
+<span class="sd">            fit plot, by default {}</span>
+<span class="sd">        residual_ax_kwargs : dict, optional</span>
+<span class="sd">            Additional arguments to pass to the residual axes subplot, by default {}</span>
+<span class="sd">        fit_ax_kwargs : dict, optional</span>
+<span class="sd">            Additional arguments to pass to the fit axes subplot, by default {}</span>
+<span class="sd">        data_kwargs : dict, optional</span>
+<span class="sd">            Additional arguments to pass to data plotting, by default {}</span>
+<span class="sd">        fit_kwargs : dict, optional</span>
+<span class="sd">            Additional arguments to pass to the fitted model plotting, by default {}</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Dictionary of figures. Depending on the options chosen, the keys are `fit`,</span>
+<span class="sd">            `corner`, `chisq`.</span>
+
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            import numpy as np</span>
+<span class="sd">            from grblc.fitting import Model, Lightcurve</span>
+
+<span class="sd">            model = Model.W07()</span>
+<span class="sd">            xdata = np.linspace(0, 10, 15)</span>
+<span class="sd">            yerr = np.random.normal(0, 0.5, len(xdata))</span>
+<span class="sd">            ydata = model(xdata, 5, -12, 1.5, 0) + yerr</span>
+<span class="sd">            lc = Lightcurve(xdata=xdata, ydata=ydata, yerr=yerr, model=model)</span>
+<span class="sd">            lc.fit(p0=[4.5, -12.5, 1, 0])</span>
+<span class="sd">            lc.show_fit(detailed=True)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;res&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;No fit results found to show.&quot;</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_flux_fixed_inplace&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Flux corrections have been applied inplace, meaning that &quot;</span>
+                          <span class="s2">&quot;these fit results will not be accurately displayed.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fix_flux</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fix_flux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_flux</span>
+
+        <span class="k">if</span> <span class="n">show_plot</span> <span class="ow">or</span> <span class="n">detailed</span><span class="p">:</span>
+            <span class="c1"># create figure</span>
+            <span class="n">fig_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">fig_kwargs</span><span class="p">):</span>
+                <span class="n">fig_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">fig_kwargs</span><span class="p">)</span>
+            <span class="n">plot_fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="o">**</span><span class="n">fig_dict</span><span class="p">)</span>
+            <span class="n">gridspec</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">height_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+            <span class="c1"># create axes</span>
+            <span class="n">ax_residual</span> <span class="o">=</span> <span class="n">plot_fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gridspec</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">**</span><span class="n">residual_ax_kwargs</span><span class="p">)</span>
+            <span class="n">ax_fit</span> <span class="o">=</span> <span class="n">plot_fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span>
+                <span class="n">gridspec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sharex</span><span class="o">=</span><span class="n">ax_residual</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_ax_kwargs</span>
+            <span class="p">)</span>
+            <span class="n">plot_fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="c1"># plot fit (within bounds first)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+                <span class="n">ax_fit</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ydata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yerr</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_kwargs</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ax_fit</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ydata</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_kwargs</span><span class="p">)</span>
+
+            <span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.8</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
+            <span class="n">y_vals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">valuesdict</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+            <span class="n">ax_fit</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;fit&quot;</span><span class="p">)</span>
+
+            <span class="c1"># ! IMPORTANT! If using the willingale, the t factor</span>
+            <span class="c1">#              changes the true location of the end of the plateau</span>
+            <span class="c1">#              by subtracting 10^(t-T)/log(10) from F. This comes naturally</span>
+            <span class="c1">#              from f(t=T) = F - 10^(t-T)/log(10)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">slug</span> <span class="o">==</span> <span class="s2">&quot;w07&quot;</span><span class="p">:</span>
+                <span class="n">T</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+                <span class="n">ax_fit</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+                    <span class="n">T</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">apply_flux_corr</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">fix_flux</span> <span class="k">else</span> <span class="n">F</span><span class="p">,</span>
+                    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+                    <span class="n">zorder</span><span class="o">=-</span><span class="mi">998</span><span class="p">,</span>
+                    <span class="n">s</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span>
+                    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Fitted T, F&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+
+            <span class="c1"># ! IMPORTANT! If using the smooth bpl, the smooth factor</span>
+            <span class="c1">#              changes the true location of the end of the plateau</span>
+            <span class="c1">#              by subtracting log10(2)/S from F. This comes naturally</span>
+            <span class="c1">#              from f(t=T) = F - log(2)/S</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">slug</span> <span class="o">==</span> <span class="s2">&quot;smooth_bpl&quot;</span><span class="p">:</span>
+                <span class="n">T</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+                <span class="n">ax_fit</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+                    <span class="n">T</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">apply_flux_corr</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">fix_flux</span> <span class="k">else</span> <span class="n">F</span><span class="p">,</span>
+                    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+                    <span class="n">zorder</span><span class="o">=-</span><span class="mi">999</span><span class="p">,</span>
+                    <span class="n">s</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span>
+                    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Fitted T, F&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># plot fitted T and F</span>
+                <span class="n">T</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="o">*</span><span class="n">__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+                <span class="n">ax_fit</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+                    <span class="n">T</span><span class="p">,</span>
+                    <span class="n">F</span><span class="p">,</span>
+                    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+                    <span class="n">zorder</span><span class="o">=-</span><span class="mi">999</span><span class="p">,</span>
+                    <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Fitted T, F&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+
+            <span class="n">fit_xlim</span> <span class="o">=</span> <span class="n">ax_fit</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+            <span class="n">fit_ylim</span> <span class="o">=</span> <span class="n">ax_fit</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+
+            <span class="c1"># plot fit (outside bounds)</span>
+            <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                    <span class="n">ax_fit</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">orig_xdata</span><span class="p">[</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">],</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">orig_ydata</span><span class="p">[</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">],</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">orig_yerr</span><span class="p">[</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">],</span>
+                        <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span>
+                        <span class="n">ms</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                        <span class="o">**</span><span class="n">data_kwargs</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ax_fit</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">orig_xdata</span><span class="p">[</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">],</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">orig_ydata</span><span class="p">[</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">],</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span>
+                        <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                        <span class="o">**</span><span class="n">data_kwargs</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+            <span class="n">ax_fit</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">fit_xlim</span><span class="p">)</span>
+            <span class="n">ax_fit</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">fit_ylim</span><span class="p">)</span>
+            <span class="n">ax_fit</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">ax_fit</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> Fit&quot;</span><span class="p">)</span>
+            <span class="n">ax_fit</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;log Flux (erg cm$^{-2}$ s$^{-1})$&quot;</span><span class="p">)</span>
+
+            <span class="c1"># plot residuals</span>
+            <span class="n">ax_residual</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span>
+                <span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.linewidth&quot;</span><span class="p">],</span> <span class="o">**</span><span class="n">fit_kwargs</span>
+            <span class="p">)</span>
+            <span class="n">residuals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ydata</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+            <span class="n">full_residuals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orig_ydata</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">orig_xdata</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="n">ax_residual</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="p">,</span> <span class="n">residuals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yerr</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_kwargs</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ax_residual</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="p">,</span> <span class="n">residuals</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_kwargs</span><span class="p">)</span>
+
+            <span class="n">residual_ylim</span> <span class="o">=</span> <span class="n">ax_residual</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                    <span class="n">ax_residual</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">orig_xdata</span><span class="p">[</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">],</span>
+                        <span class="n">full_residuals</span><span class="p">[</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">],</span>
+                        <span class="n">yerr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">orig_yerr</span><span class="p">[</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">],</span>
+                        <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span>
+                        <span class="n">ms</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                        <span class="o">**</span><span class="n">data_kwargs</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ax_residual</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">orig_xdata</span><span class="p">[</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">],</span>
+                        <span class="n">full_residuals</span><span class="p">[</span><span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">],</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span>
+                        <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                        <span class="o">**</span><span class="n">data_kwargs</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+                <span class="c1"># ax_residual.set_xlim(0.8 * self.xdata.min(), 1.1 * self.xdata.max())</span>
+                <span class="c1"># ax_residual.set_ylim(residual_ylim)</span>
+
+            <span class="n">ax_residual</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">fit_xlim</span><span class="p">)</span>
+            <span class="n">ax_residual</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">residual_ylim</span><span class="p">)</span>
+            <span class="n">ax_residual</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;log T (sec)&quot;</span><span class="p">)</span>
+            <span class="n">ax_residual</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;residuals&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">ax_fit</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span> <span class="n">visible</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">figs</span><span class="p">[</span><span class="s2">&quot;fit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plot_fig</span>
+
+            <span class="k">if</span> <span class="n">show</span><span class="p">:</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">show_corner</span> <span class="ow">or</span> <span class="n">detailed</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="p">,</span> <span class="s2">&quot;flatchain&quot;</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">corner</span>
+
+            <span class="n">corner_fig</span> <span class="o">=</span> <span class="n">corner</span><span class="o">.</span><span class="n">corner</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">flatchain</span><span class="p">,</span>
+                <span class="n">labels</span><span class="o">=</span><span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">plot_fmt</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">vary</span>
+                <span class="p">]</span>
+                <span class="o">+</span> <span class="p">([</span><span class="s2">&quot;__lnsigma&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="k">else</span> <span class="p">[]),</span>
+                <span class="n">truths</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">vary</span>
+                <span class="p">),</span>
+                <span class="o">**</span><span class="n">corner_kwargs</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">figs</span><span class="p">[</span><span class="s2">&quot;corner&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">corner_fig</span>
+
+            <span class="k">if</span> <span class="n">show</span><span class="p">:</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">show_chisq</span> <span class="ow">or</span> <span class="n">detailed</span><span class="p">:</span>  <span class="c1"># and getattr(self.res, &quot;flatchain&quot;) is not None:</span>
+
+            <span class="n">num_varied</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">vary</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">fig_chisq</span><span class="p">,</span> <span class="n">ax_chisq</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+                <span class="mi">1</span><span class="p">,</span> <span class="n">num_varied</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">num_varied</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="n">fineness</span> <span class="o">=</span> <span class="n">chisq_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;fineness&quot;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">fineness</span><span class="p">)</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">perr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="p">[</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                        <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="p">]</span>
+                    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span>
+                <span class="p">]</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+            <span class="n">paramspace</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">p</span> <span class="o">+</span> <span class="n">m</span> <span class="o">*</span> <span class="n">perr</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">multiplier</span><span class="p">]</span>
+            <span class="p">)</span>  <span class="c1"># shape is (len(multiplier), len(params))</span>
+
+            <span class="n">best_chisq</span> <span class="o">=</span> <span class="n">chisq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ydata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+            <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">ax_</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">ax_chisq</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="n">idx</span><span class="p">]]</span><span class="o">.</span><span class="n">vary</span><span class="p">:</span>
+                    <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="n">chisq_params</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">multiplier</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="n">chisq_params</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">paramspace</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span>
+                <span class="n">delta_chisq</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">chisq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ydata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">chisq_param</span><span class="p">)</span>
+                    <span class="o">-</span> <span class="n">best_chisq</span>
+                    <span class="k">for</span> <span class="n">chisq_param</span> <span class="ow">in</span> <span class="n">chisq_params</span>
+                <span class="p">]</span>
+                <span class="n">curr_param_fmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="n">idx</span><span class="p">]]</span><span class="o">.</span><span class="n">plot_fmt</span>
+                <span class="n">ax_</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                    <span class="n">multiplier</span><span class="p">,</span>
+                    <span class="n">delta_chisq</span><span class="p">,</span>
+                    <span class="n">label</span><span class="o">=</span><span class="n">curr_param_fmt</span> <span class="o">+</span> <span class="sa">fr</span><span class="s2">&quot;=</span><span class="si">{</span><span class="n">p</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> $\pm$ </span><span class="si">{</span><span class="n">perr</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">chisq_kwargs</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">ax_</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">framealpha</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+                <span class="n">ax_</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\sigma$ multiplier&quot;</span><span class="p">)</span>
+                <span class="n">ax_</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\Delta\chi^2$&quot;</span><span class="p">)</span>
+                <span class="n">ax_</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">curr_param_fmt</span><span class="p">)</span>
+                <span class="n">ax_</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">ax_</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">ax_</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span>
+                    <span class="n">x</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+                    <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span>
+                    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                    <span class="n">linewidth</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.linewidth&quot;</span><span class="p">],</span>
+                    <span class="n">zorder</span><span class="o">=-</span><span class="mi">999</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">ax_</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span>
+                    <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+                    <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span>
+                    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                    <span class="n">linewidth</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.linewidth&quot;</span><span class="p">],</span>
+                    <span class="n">zorder</span><span class="o">=-</span><span class="mi">999</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">figs</span><span class="p">[</span><span class="s2">&quot;chisq&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fig_chisq</span>
+
+            <span class="k">if</span> <span class="n">show</span><span class="p">:</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">print_res</span> <span class="ow">or</span> <span class="n">detailed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">print_fit</span><span class="p">(</span><span class="n">detailed</span><span class="p">,</span> <span class="n">fix_flux</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">save_plots</span><span class="p">):</span>
+            <span class="n">savekwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">filename</span><span class="o">=</span><span class="n">save_plots</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">save_plots</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">fig</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">figs</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_savefig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">figs</span><span class="p">[</span><span class="n">fig</span><span class="p">],</span> <span class="n">suffix</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="o">**</span><span class="n">savekwargs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">show</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">figs</span></div>
+
+<div class="viewcode-block" id="Lightcurve.show"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calls :py:meth:`Lightcurve.show_fit` if a fit has been done,</span>
+<span class="sd">        :py:meth:`Lightcurve.show_data` otherwise</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        *args : optional</span>
+<span class="sd">            Positional arguments to pass to :py:meth:`Lightcurve.show_data` or :py:meth:`Lightcurve.show_fit`</span>
+
+<span class="sd">        **kwargs : optional</span>
+<span class="sd">            Keyword arguments to pass to :py:meth:`Lightcurve.show_data` or :py:meth:`Lightcurve.show_fit`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;res&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_fit</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_data</span>
+
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Lightcurve.apply_flux_corr"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.apply_flux_corr">[docs]</a>    <span class="k">def</span> <span class="nf">apply_flux_corr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Applies a correction to the best-fit flux at the end of</span>
+<span class="sd">        the plateau.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        res</span>
+<span class="sd">            the result of the fit</span>
+<span class="sd">        inplace, optional</span>
+<span class="sd">            If True, the correction will be update the flux and flux error _inside_ the Lightcurve object.</span>
+<span class="sd">            Note that this may make Lightcurve.show_fit() give incorrect results.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">assert</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;res&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;No fit has been done&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">slug</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;w07&quot;</span><span class="p">,</span> <span class="s2">&quot;smooth_bpl&quot;</span><span class="p">]:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Lightcurve.fix_flux is set to true, but model &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">slug</span><span class="si">}</span><span class="s2">&#39; is not &#39;W07&#39; or &#39;smooth_bpl.&#39;&quot;</span> \
+                           <span class="s2">&quot;Skipping...&quot;</span><span class="p">,</span> <span class="ne">UserWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span>
+
+        <span class="n">errF</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span>
+        <span class="n">F</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">slug</span> <span class="o">==</span> <span class="s2">&quot;smooth_bpl&quot;</span><span class="p">:</span>
+            <span class="n">errS</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">S</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">newF</span> <span class="o">=</span> <span class="n">F</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">S</span>
+            <span class="n">newerrF</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">errF</span><span class="o">*</span><span class="n">errF</span> <span class="o">+</span> <span class="n">errS</span><span class="o">*</span><span class="n">errS</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">S</span><span class="o">/</span><span class="n">S</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">slug</span> <span class="o">==</span> <span class="s2">&quot;w07&quot;</span><span class="p">:</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">errT</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span>
+            <span class="n">errt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">vary</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">newerrF</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">errF</span><span class="o">*</span><span class="n">errF</span> <span class="o">+</span> <span class="p">(</span><span class="n">errT</span><span class="o">*</span><span class="n">errT</span> <span class="o">+</span> <span class="n">errt</span><span class="o">*</span><span class="n">errt</span><span class="p">)</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="n">T</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">newF</span> <span class="o">=</span> <span class="n">F</span> <span class="o">-</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_flux_fixed&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span> <span class="s2">&quot;Flux already fixed in place.&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">newF</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">newerrF</span>
+            <span class="n">newF</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">newerrF</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_flux_fixed_inplace</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fix_flux</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">newF</span><span class="p">,</span> <span class="n">newerrF</span></div>
+
+<div class="viewcode-block" id="Lightcurve.print_fit"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.print_fit">[docs]</a>    <span class="k">def</span> <span class="nf">print_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">detailed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fix_flux</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Print a fit report to `stdout`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        detailed : bool, optional</span>
+<span class="sd">            Whether you&#39;d like the full-on fit report, or a simplified version with</span>
+<span class="sd">            the necessaries, by default False</span>
+<span class="sd">        fix_flux : bool, optional</span>
+<span class="sd">            If provided, will apply the flux correction to the flux at the end of the plateau.</span>
+<span class="sd">            If not provided, will default to what user set in the constructor of the Lightcurve class.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            import numpy as np</span>
+<span class="sd">            from grblc.fitting import Model, Lightcurve</span>
+
+<span class="sd">            model = Model.W07(vary_t=False)</span>
+<span class="sd">            xdata = np.linspace(0, 10, 15)</span>
+<span class="sd">            yerr = np.random.normal(0, 0.5, len(xdata))</span>
+<span class="sd">            ydata = model(xdata, 5, -12, 1.5, 0) + yerr</span>
+<span class="sd">            lc = Lightcurve(xdata=xdata, ydata=ydata, yerr=yerr, model=model)</span>
+<span class="sd">            lc.fit(p0=[4.5, -12.5, 1, 0], run_mcmc=False)</span>
+<span class="sd">            for detailed in [False, True]:</span>
+<span class="sd">                print(&quot;=&quot;*10 + f&quot;detailed={detailed}&quot; + &quot;=&quot;*10)</span>
+<span class="sd">                lc.print_fit(detailed=detailed)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">fix_flux</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fix_flux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fix_flux</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fix_flux</span><span class="p">:</span>
+            <span class="n">newF</span><span class="p">,</span> <span class="n">newFerr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_flux_corr</span><span class="p">()</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">newF</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">newFerr</span>
+        <span class="k">if</span> <span class="n">detailed</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">lf</span><span class="o">.</span><span class="n">fit_report</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">show_correl</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="p">[</span>
+                        <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">stderr</span><span class="p">])</span>
+                        <span class="p">)</span>
+                        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">params</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_savefig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;pdf&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">Figure</span><span class="p">),</span> <span class="s2">&quot;figs must be a matplotlib Figure.&quot;</span>
+
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">suffix</span> <span class="k">if</span> <span class="n">suffix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">FILE_DIR</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">get_dir</span><span class="p">()),</span> <span class="s2">&quot;plots&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">FILE_DIR</span><span class="p">):</span>
+                <span class="n">mkdir</span><span class="p">(</span><span class="n">FILE_DIR</span><span class="p">)</span>
+
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">FILE_DIR</span><span class="p">,</span>
+                <span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">),</span> <span class="n">suffix</span><span class="p">,</span> <span class="nb">format</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="o">*</span><span class="n">fn</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="o">+</span> <span class="n">suffix</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">extension</span>
+
+        <span class="n">savefig_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">fname</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
+            <span class="n">dpi</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;savefig.dpi&quot;</span><span class="p">],</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Creator&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;grbLC v</span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">savefig_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="o">**</span><span class="n">savefig_kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_check_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="p">):</span>
+            <span class="n">best_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">func_args</span>
+            <span class="n">best_err</span> <span class="o">=</span> <span class="p">[</span><span class="n">param</span> <span class="o">+</span> <span class="s2">&quot;_err&quot;</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">best_params</span><span class="p">]</span>
+            <span class="n">best_guesses</span> <span class="o">=</span> <span class="p">[</span><span class="n">param</span> <span class="o">+</span> <span class="s2">&quot;_guess&quot;</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">best_params</span><span class="p">]</span>
+
+            <span class="n">header</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">header</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;GRB&quot;</span><span class="p">,</span> <span class="s2">&quot;tt&quot;</span><span class="p">,</span> <span class="s2">&quot;tf&quot;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">err</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">best_params</span><span class="p">,</span> <span class="n">best_err</span><span class="p">):</span>
+                <span class="n">header</span> <span class="o">+=</span> <span class="p">[</span><span class="n">param</span><span class="p">,</span> <span class="n">err</span><span class="p">]</span>
+            <span class="n">header</span> <span class="o">+=</span> <span class="n">best_guesses</span>
+            <span class="n">header</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;chisq&quot;</span><span class="p">]</span>
+
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">header</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Lightcurve.save_fit"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.save_fit">[docs]</a>    <span class="k">def</span> <span class="nf">save_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Saves fit values to either a specified file or a default file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str, optional</span>
+<span class="sd">            File name to save fit values to, by default None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;res&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;No fit results found.&quot;</span>
+
+        <span class="n">io</span><span class="o">.</span><span class="n">save_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;grbLC&gt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<div class="viewcode-block" id="Lightcurve.to_dict"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_space</span><span class="o">=</span><span class="s2">&quot;lin&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Function that returns a dictionary of the lightcurve data.</span>
+
+<span class="sd">            You can specify the data to be in either logarithmic (`log`) or linear</span>
+<span class="sd">            (`lin`) space.</span>
+
+<span class="sd">            Each dictionary contains the following keys:</span>
+
+<span class="sd">                #. `time_sec` : The time of the datapoint in seconds (xdata)</span>
+
+<span class="sd">                #. `flux` : The flux of the datapoint in erg cm\(^{-2}\) s\(^{-1}\) (ydata)</span>
+
+<span class="sd">                #. `flux_err` : The flux error of the datapoint in erg cm\(^{-2}\) s\(^{-1}\)</span>
+<span class="sd">                (yerr)</span>
+
+<span class="sd">                #. `**attrs` : Any additional attributes of the datapoint as given in the</span>
+<span class="sd">                instantiation of the :py:class:`Lightcurve` object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_space : str, {&quot;log&quot;, &quot;lin&quot;}, optional</span>
+<span class="sd">            Whether the data returned will be in logarithmic or linear space,</span>
+<span class="sd">            by default &quot;lin&quot;</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        data : dict</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If any &quot;space&quot; other than &quot;log&quot; and &quot;lin&quot; are specified.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;mask&quot;</span><span class="p">)</span>
+
+        <span class="c1"># assumes data is already in log space</span>
+        <span class="k">def</span> <span class="nf">loglin_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">data_space</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
+                <span class="n">log_data</span> <span class="o">=</span> <span class="n">data</span>
+                <span class="k">return</span> <span class="n">log_data</span>
+            <span class="k">elif</span> <span class="n">data_space</span> <span class="o">==</span> <span class="s2">&quot;lin&quot;</span><span class="p">:</span>
+                <span class="n">lin_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">lin_data</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;data_space must be &#39;log&#39; or &#39;lin&#39;&quot;</span><span class="p">)</span>
+
+        <span class="c1"># assumes data is already in log space</span>
+        <span class="k">def</span> <span class="nf">loglin_err</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">err</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">data_space</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
+                <span class="n">log_err</span> <span class="o">=</span> <span class="n">err</span>
+                <span class="k">return</span> <span class="n">log_err</span>
+            <span class="k">elif</span> <span class="n">data_space</span> <span class="o">==</span> <span class="s2">&quot;lin&quot;</span><span class="p">:</span>
+                <span class="n">log_err</span> <span class="o">=</span> <span class="n">err</span>
+                <span class="n">log_data</span> <span class="o">=</span> <span class="n">data</span>
+                <span class="n">lin_err</span> <span class="o">=</span> <span class="n">log_err</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">log_data</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">lin_err</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;data_space must be &#39;log&#39; or &#39;lin&#39;&quot;</span><span class="p">)</span>
+
+        <span class="n">data_attrs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+        <span class="n">data_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">time_sec</span><span class="o">=</span><span class="n">loglin_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xdata</span><span class="p">),</span>
+            <span class="n">flux</span><span class="o">=</span><span class="n">loglin_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ydata</span><span class="p">),</span>
+            <span class="n">flux_err</span><span class="o">=</span><span class="n">loglin_err</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ydata</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yerr</span><span class="p">),</span>
+            <span class="o">**</span><span class="n">data_attrs</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">data_dict</span></div>
+
+<div class="viewcode-block" id="Lightcurve.to_df"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.to_df">[docs]</a>    <span class="k">def</span> <span class="nf">to_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_space</span><span class="o">=</span><span class="s2">&quot;lin&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Function that returns a Pandas DataFrames of the lightcurve data.</span>
+
+<span class="sd">            You can specify the data to be returned in either logarithmic (`log`) or</span>
+<span class="sd">            linear (`lin`) space.</span>
+
+<span class="sd">            Each DataFrame contains the following columns:</span>
+
+<span class="sd">                #. `time_sec` : The time of the datapoint in seconds (xdata)</span>
+<span class="sd">                #. `flux` : The flux of the datapoint in erg cm\(^{-2}\) s\(^{-1}\) (ydata)</span>
+<span class="sd">                #. `flux_err` : The flux error of the datapoint in erg cm\(^{-2}\) s\(^{-1}\) (yerr)</span>
+<span class="sd">                #. **attrs : Any additional attributes of the datapoint as given in the</span>
+<span class="sd">                             instantiation of the :py:class:`Lightcurve` object.</span>
+
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_space : str, {&quot;log&quot;, &quot;lin&quot;}, optional</span>
+<span class="sd">            Whether the data returned will be in logarithmic or linear space,</span>
+<span class="sd">            by default &quot;log&quot;</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        data : pd.DataFrame</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If any &quot;space&quot; other than &quot;log&quot; and &quot;lin&quot; are specified.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">data_space</span><span class="o">=</span><span class="n">data_space</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Lightcurve.prompt"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.lightcurve.Lightcurve.prompt">[docs]</a>    <span class="k">def</span> <span class="nf">prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A pipeline for fitting a light curve from user inputs. The data is first shown,</span>
+<span class="sd">        bounds are set, parameter priors are set, and the fit is run, and saved if desired.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_data</span><span class="p">()</span>
+
+        <span class="n">auto_guess</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;want to fit? (y/[n])&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">auto_guess</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]:</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;func&quot;</span><span class="p">):</span>
+                <span class="n">model_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span>
+                    <span class="s2">&quot;model to use? (i.e., W07, SIMPLE_BPL, or SMOOTH_BPL)&quot;</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">Model</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+            <span class="n">xmin</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;xmin : [-inf]&quot;</span><span class="p">)</span>
+            <span class="n">xmin</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">xmin</span><span class="p">)</span> <span class="k">if</span> <span class="n">xmin</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+            <span class="n">xmax</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;xmax : [inf]&quot;</span><span class="p">)</span>
+            <span class="n">xmax</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">xmax</span><span class="p">)</span> <span class="k">if</span> <span class="n">xmax</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+            <span class="n">ymin</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;ymin : [-inf]&quot;</span><span class="p">)</span>
+            <span class="n">ymin</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ymin</span><span class="p">)</span> <span class="k">if</span> <span class="n">ymin</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+            <span class="n">ymax</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;ymax : [inf]&quot;</span><span class="p">)</span>
+            <span class="n">ymax</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ymax</span><span class="p">)</span> <span class="k">if</span> <span class="n">ymax</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_bounds</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">])</span>
+
+            <span class="n">param_guesses</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
+                <span class="n">param_guesses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;init </span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s2"> : &quot;</span><span class="p">)))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">p0</span><span class="o">=</span><span class="n">param_guesses</span><span class="p">,</span> <span class="n">run_mcmc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_fit</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;save? ([y]/n): &quot;</span><span class="p">))</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">show_fit</span><span class="p">(</span><span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_plots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">clear_output</span>
+
+            <span class="n">clear_output</span><span class="p">()</span>
+            <span class="k">return</span></div></div>
+
+
+<span class="n">major</span><span class="p">,</span> <span class="o">*</span><span class="n">__</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span>
+<span class="n">readfile_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">}</span> <span class="k">if</span> <span class="n">major</span> <span class="o">&gt;=</span> <span class="mi">3</span> <span class="k">else</span> <span class="p">{}</span>
+
+
+<span class="k">def</span> <span class="nf">_readfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">readfile_kwargs</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">contents</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">contents</span>
+
+
+<span class="n">version_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;__version__ = &quot;(.*?)&quot;&#39;</span><span class="p">)</span>
+<span class="n">contents</span> <span class="o">=</span> <span class="n">_readfile</span><span class="p">(</span>
+    <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))),</span> <span class="s2">&quot;__init__.py&quot;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="n">version_regex</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">contents</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">__directory__</span> <span class="o">=</span> <span class="n">get_dir</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, Sam Young.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

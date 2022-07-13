@@ -69,17 +69,17 @@ coverage: ## check code coverage quickly with the default Python
 docs: ## generate Sphinx HTML documentation, including API docs
 	rm -f docs/grblc.rst
 	rm -f docs/modules.rst
-	rm -rf built_docs/
-	sphinx-apidoc -o docs/ grblc
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
-	mkdir -p built_docs/
-	cp -r docs/_build/html/* built_docs
-	$(BROWSER) built_docs/index.html
-	rm -rf docs/_build
+	rm -rf docs/
+	sphinx-apidoc -o docs_src/ grblc
+	$(MAKE) -C docs_src clean
+	$(MAKE) -C docs_src html
+	mkdir -p docs/
+	cp -r docs_src/_build/html/* docs
+	$(BROWSER) docs/index.html
+	rm -rf docs_src/_build/html/
 
 servedocs: docs ## compile the docs watching for changes
-	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
+	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs_src html' -R -D .
 
 release: dist ## package and upload a release
 	twine upload dist/*

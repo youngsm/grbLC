@@ -1,0 +1,440 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>grblc.search.ads package &mdash; grbLC 0.1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+  <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="grblc.search.gcn package" href="grblc.search.gcn.html" />
+    <link rel="prev" title="grblc.search package" href="grblc.search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> grbLC
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">grblc</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="grblc.html">grblc package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="grblc.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="grblc.convert.html">grblc.convert package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="grblc.fitting.html">grblc.fitting package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="grblc.search.html">grblc.search package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="grblc.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grblc.html#module-grblc.util">grblc.util module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grblc.html#module-grblc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">grbLC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">grblc</a> &raquo;</li>
+        
+          <li><a href="grblc.html">grblc package</a> &raquo;</li>
+        
+          <li><a href="grblc.search.html">grblc.search package</a> &raquo;</li>
+        
+      <li>grblc.search.ads package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/grblc.search.ads.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="grblc-search-ads-package">
+<h1>grblc.search.ads package<a class="headerlink" href="#grblc-search-ads-package" title="Permalink to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-grblc.search.ads.ECHO">
+<span id="grblc-search-ads-echo-module"></span><h2>grblc.search.ads.ECHO module<a class="headerlink" href="#module-grblc.search.ads.ECHO" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="grblc.search.ads.ECHO.SynchronizedEcho">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grblc.search.ads.ECHO.</span></span><span class="sig-name descname"><span class="pre">SynchronizedEcho</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/search/ads/ECHO.html#SynchronizedEcho"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.search.ads.ECHO.SynchronizedEcho" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</section>
+<section id="module-grblc.search.ads.cli">
+<span id="grblc-search-ads-cli-module"></span><h2>grblc.search.ads.cli module<a class="headerlink" href="#module-grblc.search.ads.cli" title="Permalink to this heading">¶</a></h2>
+<p>Console script for adsgrb.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.search.ads.cli.main">
+<span class="sig-prename descclassname"><span class="pre">grblc.search.ads.cli.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/search/ads/cli.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.search.ads.cli.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Console script for adsgrb.</p>
+</dd></dl>
+
+</section>
+<section id="module-grblc.search.ads.config">
+<span id="grblc-search-ads-config-module"></span><h2>grblc.search.ads.config module<a class="headerlink" href="#module-grblc.search.ads.config" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.search.ads.config.read_apikey">
+<span class="sig-prename descclassname"><span class="pre">grblc.search.ads.config.</span></span><span class="sig-name descname"><span class="pre">read_apikey</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/search/ads/config.html#read_apikey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.search.ads.config.read_apikey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads in the required API key for APS queries by setting the <cite>ads</cite> package’s
+config.token to the string found in {HOME}/.ads/dev_key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>No return.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.search.ads.config.reset_apikey">
+<span class="sig-prename descclassname"><span class="pre">grblc.search.ads.config.</span></span><span class="sig-name descname"><span class="pre">reset_apikey</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/search/ads/config.html#reset_apikey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.search.ads.config.reset_apikey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the user’s ADS API key found in {HOME}/.ads/dev_key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>No return, but calls _read_apikey() after reset.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.search.ads.config.set_apikey">
+<span class="sig-prename descclassname"><span class="pre">grblc.search.ads.config.</span></span><span class="sig-name descname"><span class="pre">set_apikey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/search/ads/config.html#set_apikey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.search.ads.config.set_apikey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a file at {HOME}/.ads/dev_key containing the
+ADS API key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – ADS API key</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>No return, but calls _read_apikey() after setting.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-grblc.search.ads.output">
+<span id="grblc-search-ads-output-module"></span><h2>grblc.search.ads.output module<a class="headerlink" href="#module-grblc.search.ads.output" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.search.ads.output.savePDF">
+<span class="sig-prename descclassname"><span class="pre">grblc.search.ads.output.</span></span><span class="sig-name descname"><span class="pre">savePDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">articlelist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/youngsam/Documents/GitHub/grbLC/docs_src'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/search/ads/output.html#savePDF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.search.ads.output.savePDF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-grblc.search.ads.search">
+<span id="grblc-search-ads-search-module"></span><h2>grblc.search.ads.search module<a class="headerlink" href="#module-grblc.search.ads.search" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.search.ads.search.additionalKeywords">
+<span class="sig-prename descclassname"><span class="pre">grblc.search.ads.search.</span></span><span class="sig-name descname"><span class="pre">additionalKeywords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keywords</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/search/ads/search.html#additionalKeywords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.search.ads.search.additionalKeywords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert keyword(s) to a string to use in an ADS query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>keywords</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>,`tuple`,`str`) – Keywords to specifically search for in addition to the GRB.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>String of keyword(s) separated by an “AND” for use in an ADS query.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.search.ads.search.gcnSearch">
+<span class="sig-prename descclassname"><span class="pre">grblc.search.ads.search.</span></span><span class="sig-name descname"><span class="pre">gcnSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GRB</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keywords</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">printlength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/search/ads/search.html#gcnSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.search.ads.search.gcnSearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>User function to find GCNs containing the inputted GRB and optional
+keywords</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GRB</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – GRB name; e.g., ‘010222’ or ‘200205A’</p></li>
+<li><p><strong>keywords</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>,`tuple`,`str`) – Keywords to specifically search for in addition to the GRB.</p></li>
+<li><p><strong>printlength</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Determines whether the user would like the number of articles found to be printed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of <cite>ads.search.Article</cite>’s containing GCNs pertaining to GRB and optional
+keywords.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.search.ads.search.getArticle">
+<span class="sig-prename descclassname"><span class="pre">grblc.search.ads.search.</span></span><span class="sig-name descname"><span class="pre">getArticle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">articlelist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">article</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GRB</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">firsttry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/search/ads/search.html#getArticle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.search.ads.search.getArticle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download an article from arXiv or other sources.
+:param articlelist:</p>
+<blockquote>
+<div><p>The string list to append article texts to.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>article</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ads.search.Article</span></code>) – The ADS article to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Nothing. Side effect of appending text of article body to articlelist.</p>
+</dd>
+</dl>
+<p>Modified from <a class="reference external" href="https://github.com/andycasey/ads/blob/master/examples/monthly-institute-publications/stromlo.py#22">https://github.com/andycasey/ads/blob/master/examples/monthly-institute-publications/stromlo.py#22</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.search.ads.search.getArticles">
+<span class="sig-prename descclassname"><span class="pre">grblc.search.ads.search.</span></span><span class="sig-name descname"><span class="pre">getArticles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">finds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/search/ads/search.html#getArticles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.search.ads.search.getArticles" title="Permalink to this definition">¶</a></dt>
+<dd><p>User function to create a single string containing seperated text bodies from a
+list of <cite>ads.search.Article</cite>’s.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>papers</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code> of <cite>ads.search.Article</cite>) – A list of ADS articles to download.</p></li>
+<li><p><strong>threading</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Boolean to specify the use of concurrency.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>String containing each GCN separated by a line.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.search.ads.search.getGRBComboQuery">
+<span class="sig-prename descclassname"><span class="pre">grblc.search.ads.search.</span></span><span class="sig-name descname"><span class="pre">getGRBComboQuery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GRB</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/search/ads/search.html#getGRBComboQuery"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.search.ads.search.getGRBComboQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the several versions of a GRB name that could come up in ADS searches.
+E.g., 010222A, 10222A, GRB010222A, GRB1022A</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>GRB</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The GRB to get name combinations of.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>String of GRB name combinations separated by “OR” for search in ADS.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.search.ads.search.litSearch">
+<span class="sig-prename descclassname"><span class="pre">grblc.search.ads.search.</span></span><span class="sig-name descname"><span class="pre">litSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GRB</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keywords</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">printlength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/search/ads/search.html#litSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.search.ads.search.litSearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>User function to find literature containing the inputted GRB and optional
+keywords</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GRB</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – GRB name; e.g., ‘010222’ or ‘200205A’</p></li>
+<li><p><strong>keywords</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>,`tuple`,`str`) – Keywords to specifically search for in addition to the GRB.</p></li>
+<li><p><strong>printlength</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Determines whether the user would like the number of articles found to be printed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of <cite>ads.search.Article</cite>’s containing GCNs pertaining to GRB and optional
+keywords.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.search.ads.search.prepareGRB">
+<span class="sig-prename descclassname"><span class="pre">grblc.search.ads.search.</span></span><span class="sig-name descname"><span class="pre">prepareGRB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GRB</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/search/ads/search.html#prepareGRB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.search.ads.search.prepareGRB" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.search.ads.search.readfile">
+<span class="sig-prename descclassname"><span class="pre">grblc.search.ads.search.</span></span><span class="sig-name descname"><span class="pre">readfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/search/ads/search.html#readfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.search.ads.search.readfile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-grblc.search.ads">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-grblc.search.ads" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="grblc.search.gcn.html" class="btn btn-neutral float-right" title="grblc.search.gcn package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="grblc.search.html" class="btn btn-neutral float-left" title="grblc.search package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, Sam Young.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

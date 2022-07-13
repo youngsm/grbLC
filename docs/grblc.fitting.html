@@ -1,0 +1,1063 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>grblc.fitting package &mdash; grbLC 0.1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/jupyter-sphinx.css" type="text/css" />
+  <link rel="stylesheet" href="_static/thebelab.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="grblc.search package" href="grblc.search.html" />
+    <link rel="prev" title="grblc.convert package" href="grblc.convert.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> grbLC
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">grblc</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="grblc.html">grblc package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="grblc.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="grblc.convert.html">grblc.convert package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">grblc.fitting package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="grblc.search.html">grblc.search package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="grblc.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grblc.html#module-grblc.util">grblc.util module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grblc.html#module-grblc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">grbLC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">grblc</a> &raquo;</li>
+        
+          <li><a href="grblc.html">grblc package</a> &raquo;</li>
+        
+      <li>grblc.fitting package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/grblc.fitting.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="grblc-fitting-package">
+<h1>grblc.fitting package<a class="headerlink" href="#grblc-fitting-package" title="Permalink to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-grblc.fitting.constants">
+<span id="grblc-fitting-constants-module"></span><h2>grblc.fitting.constants module<a class="headerlink" href="#module-grblc.fitting.constants" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-grblc.fitting.io">
+<span id="grblc-fitting-io-module"></span><h2>grblc.fitting.io module<a class="headerlink" href="#module-grblc.fitting.io" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.fitting.io.check_datatype">
+<span class="sig-prename descclassname"><span class="pre">grblc.fitting.io.</span></span><span class="sig-name descname"><span class="pre">check_datatype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/io.html#check_datatype"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.io.check_datatype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a filename, try and guess what dataset the data comes from
+(e.g., Si, Kann, Oates, etc.)</p>
+<p>For example, a file named <cite>*_Oates.txt</cite> will be interpreted as data in the same format
+as Sam Oates’ data.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.fitting.io.check_header">
+<span class="sig-prename descclassname"><span class="pre">grblc.fitting.io.</span></span><span class="sig-name descname"><span class="pre">check_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">more_than_one_row</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/io.html#check_header"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.io.check_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>This monstrosity returns what line a header is at</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.fitting.io.isfloat">
+<span class="sig-prename descclassname"><span class="pre">grblc.fitting.io.</span></span><span class="sig-name descname"><span class="pre">isfloat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/io.html#isfloat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.io.isfloat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.fitting.io.read_data">
+<span class="sig-prename descclassname"><span class="pre">grblc.fitting.io.</span></span><span class="sig-name descname"><span class="pre">read_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datatype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">999</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/io.html#read_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.io.read_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.fitting.io.readin">
+<span class="sig-prename descclassname"><span class="pre">grblc.fitting.io.</span></span><span class="sig-name descname"><span class="pre">readin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/io.html#readin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.io.readin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-grblc.fitting.lightcurve">
+<span id="grblc-fitting-lightcurve-module"></span><h2>grblc.fitting.lightcurve module<a class="headerlink" href="#module-grblc.fitting.lightcurve" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grblc.fitting.lightcurve.</span></span><span class="sig-name descname"><span class="pre">Lightcurve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xdata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ydata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xerr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yerr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_space</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'log'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#grblc.fitting.model.Model" title="grblc.fitting.model.Model"><span class="pre">Model</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fix_flux</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The main module for fitting lightcurves.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Data stored in <a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve" title="grblc.fitting.lightcurve.Lightcurve"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lightcurve</span></code></a> objects are always in logarithmic
+space; the parameter <code class="docutils literal notranslate"><span class="pre">data_space</span></code> is only used to convert data to log space
+if it is not already in such. If your data is in linear space [i.e., your
+time data is sec, and not (log)(sec)], then you should set <code class="docutils literal notranslate"><span class="pre">data_space</span></code>
+to <code class="docutils literal notranslate"><span class="pre">lin</span></code>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of file containing light curve data, by default None</p></li>
+<li><p><strong>xdata</strong> (<em>array_like</em><em>, </em><em>optional</em>) – X values, length (n,), by default None</p></li>
+<li><p><strong>ydata</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Y values, by default None</p></li>
+<li><p><strong>xerr</strong> (<em>array_like</em><em>, </em><em>optional</em>) – X error, by default None</p></li>
+<li><p><strong>yerr</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Y error, by default None</p></li>
+<li><p><strong>data_space</strong> (<em>str</em><em>, </em><em>{log</em><em>, </em><em>lin}</em><em>, </em><em>optional</em>) – Whether the data inputted is in log or linear space, by default ‘log’</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the GRB, by default <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code> name, or <code class="docutils literal notranslate"><span class="pre">unknown</span> <span class="pre">grb</span></code> if not
+provided.</p></li>
+<li><p><strong>model</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code>, optional) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code> to use in lightcurve fitting, by default None</p></li>
+<li><p><strong>fix_flux</strong> (<em>bool</em><em>, </em><em>optional</em>) – In some fits, the actual flux at the end of the plateau is not the fitted value
+F. This applies the necessary corrections to the fitted values to account for
+this discrepancy. Note this only works for the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Model.W07()</span></code> and
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Model.SMOOTH_BPL()</span></code> models.</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em><em>, </em><em>optional</em>) – A <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code> of array_like objects with length (n,) with
+any additional attributes (e.g., band) for each datapoint, by default {}.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.apply_flux_corr">
+<span class="sig-name descname"><span class="pre">apply_flux_corr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.apply_flux_corr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.apply_flux_corr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies a correction to the best-fit flux at the end of
+the plateau.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>res</strong> – the result of the fit</p></li>
+<li><p><strong>inplace</strong> – If True, the correction will be update the flux and flux error _inside_ the Lightcurve object.
+Note that this may make Lightcurve.show_fit() give incorrect results.</p></li>
+<li><p><strong>optional</strong> – If True, the correction will be update the flux and flux error _inside_ the Lightcurve object.
+Note that this may make Lightcurve.show_fit() give incorrect results.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.exclude_range">
+<span class="sig-name descname"><span class="pre">exclude_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_space</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'log'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.exclude_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.exclude_range" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>exclude_range</cite> takes a range of x and y values and excludes them from the data
+of the current lightcurve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xs</strong> (<em>tuple of form</em><em> (</em><em>xmin</em><em>, </em><em>xmax</em><em>)</em><em>, </em><em>optional</em>) – Range along the x-axis to exclude.</p></li>
+<li><p><strong>ys</strong> (<em>tuple of form</em><em> (</em><em>ymin</em><em>, </em><em>ymax</em><em>)</em><em>, </em><em>optional</em>) – Range along the y-axis to exclude.</p></li>
+<li><p><strong>data_space</strong> (<em>str</em><em>, </em><em>{log</em><em>, </em><em>lin}</em><em>, </em><em>optional</em>) – Whether you’d like to exclude in logarithmic or linear space, by default ‘log’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_mcmc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimize_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emcee_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.fit" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Fits the lightcurve data to the model. There are two steps in this process:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><dl class="simple">
+<dt>Minimize the residuals using <cite>Nelder-Mead</cite> with</dt><dd><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html">scipy.optimize.minimize</a></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Probe the posterior distribution using <a class="reference external" href="https://emcee.readthedocs.io/en/stable/">emcee</a>, a</dt><dd><p>Markov-Chain Monte Carlo Python package, using the best-fit parameters from step 1 as the starting
+point. This is optional (via the <code class="docutils literal notranslate"><span class="pre">run_mcmc</span></code> parameter), but recommended, as it gives a better view
+of the errors on the best-fit parameters.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p0</strong> (<em>array_list</em><em>, </em><em>length of number of parameters</em>) – Initial guess for the parameters.</p></li>
+<li><p><strong>run_mcmc</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to run the optional MCMC step, by default True</p></li>
+<li><p><strong>show</strong> (<em>bool</em><em>, </em><em>optional</em>) – [description], by default False</p></li>
+<li><p><strong>minimize_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Keyword arguments to pass to
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html">scipy.optimize.minimize</a>,
+by default {}</p></li>
+<li><p><strong>emcee_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Keyword arguments to pass to
+<a class="reference external" href="https://lmfit.github.io/lmfit-py/fitting.html#lmfit.minimizer.Minimizer.emcee">lmfit.Minimizer.emcee</a>, by default {}</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>See <a class="reference external" href="https://lmfit.github.io/lmfit-py/fitting.html#lmfit.minimizer.MinimizerResult">lmfit.Minimizer.MinimizerResult</a> for more information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>lmfit.minimizer.MinimizerResult</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.print_fit">
+<span class="sig-name descname"><span class="pre">print_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detailed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fix_flux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.print_fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.print_fit" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Print a fit report to <cite>stdout</cite>.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>detailed</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether you’d like the full-on fit report, or a simplified version with
+the necessaries, by default False</p></li>
+<li><p><strong>fix_flux</strong> (<em>bool</em><em>, </em><em>optional</em>) – If provided, will apply the flux correction to the flux at the end of the plateau.
+If not provided, will default to what user set in the constructor of the Lightcurve class.</p></li>
+<li><p><strong>Example</strong> – </p></li>
+<li><p><strong>jupyter-execute::</strong> (<em>..</em>) – <p>import numpy as np
+from grblc.fitting import Model, Lightcurve</p>
+<p>model = Model.W07(vary_t=False)
+xdata = np.linspace(0, 10, 15)
+yerr = np.random.normal(0, 0.5, len(xdata))
+ydata = model(xdata, 5, -12, 1.5, 0) + yerr
+lc = Lightcurve(xdata=xdata, ydata=ydata, yerr=yerr, model=model)
+lc.fit(p0=[4.5, -12.5, 1, 0], run_mcmc=False)
+for detailed in [False, True]:</p>
+<blockquote>
+<div><p>print(“=”<a href="#id1"><span class="problematic" id="id2">*</span></a>10 + f”detailed={detailed}” + “=”<a href="#id3"><span class="problematic" id="id4">*</span></a>10)
+lc.print_fit(detailed=detailed)</p>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.prompt">
+<span class="sig-name descname"><span class="pre">prompt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.prompt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.prompt" title="Permalink to this definition">¶</a></dt>
+<dd><p>A pipeline for fitting a light curve from user inputs. The data is first shown,
+bounds are set, parameter priors are set, and the fit is run, and saved if desired.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.read_data">
+<span class="sig-name descname"><span class="pre">read_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.read_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.read_data" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Reads in data from a file. The data must be in the correct format.
+See the <code class="xref py py-meth docutils literal notranslate"><span class="pre">io.read_data()</span></code> for more information.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>xdata, ydata, xerr, yerr</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.save_fit">
+<span class="sig-name descname"><span class="pre">save_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.save_fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.save_fit" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Saves fit values to either a specified file or a default file.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – File name to save fit values to, by default None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.set_bounds">
+<span class="sig-name descname"><span class="pre">set_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ymin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ymax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.set_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.set_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Sets the bounds on the xdata and ydata to (1) plot and (2) fit with. Either</dt><dd><p>provide bounds or xmin, xmax, ymin, ymax. Assumes data is already in log
+space. If <a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve.set_data" title="grblc.fitting.lightcurve.Lightcurve.set_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lightcurve.set_data()</span></code></a> has been called, then the data
+has already been converted to log space.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bounds</strong> (<em>array_like of length 4</em><em>, </em><em>optional</em>) – Bounds on inputted x and y-data, by default None</p></li>
+<li><p><strong>xmin</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum x, by default -np.inf</p></li>
+<li><p><strong>xmax</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum x, by default np.inf</p></li>
+<li><p><strong>ymin</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum y, by default -np.inf</p></li>
+<li><p><strong>ymax</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum y, by default np.inf</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.set_data">
+<span class="sig-name descname"><span class="pre">set_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xdata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ydata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xerr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yerr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_space</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'log'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.set_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.set_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the <cite>xdata</cite> and <cite>ydata</cite>, and optionally <cite>xerr</cite> and <cite>yerr</cite> of the lightcurve.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Data stored in <a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve" title="grblc.fitting.lightcurve.Lightcurve"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lightcurve</span></code></a> objects are always in logarithmic
+space; the parameter <code class="docutils literal notranslate"><span class="pre">data_space</span></code> is only used to convert data to log space
+if it is not already in such. If your data is in linear space [i.e., your
+time data is sec, and not log(sec)], then you should set <code class="docutils literal notranslate"><span class="pre">data_space</span></code>
+to <code class="docutils literal notranslate"><span class="pre">lin</span></code>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xdata</strong> (<em>array_like</em>) – X data</p></li>
+<li><p><strong>ydata</strong> (<em>array_like</em>) – Y data</p></li>
+<li><p><strong>xerr</strong> (<em>array_like</em><em>, </em><em>optional</em>) – X error, by default None</p></li>
+<li><p><strong>yerr</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Y error, by default None</p></li>
+<li><p><strong>data_space</strong> (<em>str</em><em>, </em><em>{log</em><em>, </em><em>lin}</em><em>, </em><em>optional</em>) – Whether the data inputted is in logarithmic or linear space, by default ‘log’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.set_model">
+<span class="sig-name descname"><span class="pre">set_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#grblc.fitting.model.Model" title="grblc.fitting.model.Model"><span class="pre">Model</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.set_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.set_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the lightcurve model to use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code>) – <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code> to use in lightcurve fitting</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.show"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls <a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve.show_fit" title="grblc.fitting.lightcurve.Lightcurve.show_fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lightcurve.show_fit()</span></code></a> if a fit has been done,
+<a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve.show_data" title="grblc.fitting.lightcurve.Lightcurve.show_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lightcurve.show_data()</span></code></a> otherwise</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>*args</strong> (<em>optional</em>) – Positional arguments to pass to <a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve.show_data" title="grblc.fitting.lightcurve.Lightcurve.show_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lightcurve.show_data()</span></code></a> or <a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve.show_fit" title="grblc.fitting.lightcurve.Lightcurve.show_fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lightcurve.show_fit()</span></code></a></p></li>
+<li><p><strong>**kwargs</strong> (<em>optional</em>) – Keyword arguments to pass to <a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve.show_data" title="grblc.fitting.lightcurve.Lightcurve.show_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lightcurve.show_data()</span></code></a> or <a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve.show_fit" title="grblc.fitting.lightcurve.Lightcurve.show_fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lightcurve.show_fit()</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.show_data">
+<span class="sig-name descname"><span class="pre">show_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.show_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.show_data" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Plots the lightcurve data. If no fit has been ran, <a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve.show" title="grblc.fitting.lightcurve.Lightcurve.show"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lightcurve.show()</span></code></a> will call
+this function.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This doesn’t plot any fit results. Use <a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve.show_fit" title="grblc.fitting.lightcurve.Lightcurve.show_fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lightcurve.show_fit()</span></code></a> to do so.</p>
+</div>
+<p>Example:</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">grblc.fitting</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">Lightcurve</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">W07</span><span class="p">(</span><span class="n">vary_t</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">xdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">yerr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">xdata</span><span class="p">))</span>
+<span class="n">ydata</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">yerr</span>
+<span class="n">lc</span> <span class="o">=</span> <span class="n">Lightcurve</span><span class="p">(</span><span class="n">xdata</span><span class="o">=</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="o">=</span><span class="n">ydata</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">yerr</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+<span class="n">lc</span><span class="o">.</span><span class="n">show_data</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/grblc.fitting_0_0.png" src="_images/grblc.fitting_0_0.png" />
+</div>
+</div>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fig_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Arguments to pass to <code class="docutils literal notranslate"><span class="pre">plt.figure()</span></code>, by default {}.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.show_fit">
+<span class="sig-name descname"><span class="pre">show_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detailed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_res</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_corner</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_chisq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_plots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fix_flux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corner_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chisq_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">residual_ax_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_ax_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.show_fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.show_fit" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Shows the fit to the data. If a fit has been ran, <a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve.show" title="grblc.fitting.lightcurve.Lightcurve.show"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lightcurve.show()</span></code></a>
+will call this function.</p>
+<p>This function can:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Print the best-fit parameters and their errors. (<cite>print_res</cite>)</p></li>
+<li><p>Show the fit to the data. (<cite>show_plot</cite>)</p></li>
+<li><p>Show the corner plot of the posterior distribution of the parameters. (<cite>show_corner</cite>)</p></li>
+<li><p>Show the (Deltachi^2) confidence intervals of the fit. (<cite>show_chisq</cite>)</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>detailed</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use all plotting and printing capabilities available
+to show the fit, by default False</p></li>
+<li><p><strong>print_res</strong> (<em>bool</em><em>, </em><em>optional</em>) – Prints the fit result parameters and their errors, by default True</p></li>
+<li><p><strong>show_plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – Shows the lightcurve and fitted model, as well as residuals, by default True</p></li>
+<li><p><strong>show_corner</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to show the corner plot. Can only be used when <cite>use_mcmc</cite> was set
+to True when calling <a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve.fit" title="grblc.fitting.lightcurve.Lightcurve.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lightcurve.fit()</span></code></a>, by default False</p></li>
+<li><p><strong>show_chisq</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to show (Deltachi^2) confidence intervals, by default False</p></li>
+<li><p><strong>save_plots</strong> (<em>bool</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – If <cite>bool</cite>, whether to save the plots or not in a folder in the current
+directory called <cite>plots</cite>. If <cite>str</cite>, the directory and filename to save plots
+(e.g., <code class="docutils literal notranslate"><span class="pre">../../fit/grb010222.pdf</span></code>), by default None</p></li>
+<li><p><strong>show</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether you want <cite>plt.show()</cite> to be ran. If not true, the figures will be returned
+as a dictionary, by default True</p></li>
+<li><p><strong>fix_flux</strong> (<em>bool</em><em>, </em><em>optional</em>) – If provided, will apply the flux correction to the flux at the end of the plateau.
+If not provided, will default to what user set in the constructor of the Lightcurve class.</p></li>
+<li><p><strong>corner_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional arguments to pass to <code class="xref py py-meth docutils literal notranslate"><span class="pre">corner.corner()</span></code>, by default {}</p></li>
+<li><p><strong>chisq_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional arguments to pass to <code class="docutils literal notranslate"><span class="pre">plt.plot</span></code> for the (Deltachi^2)
+confidence interval plots, by default {}</p></li>
+<li><p><strong>fig_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional arguments to pass to <code class="docutils literal notranslate"><span class="pre">plt.figure</span></code> when showing the
+fit plot, by default {}</p></li>
+<li><p><strong>residual_ax_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional arguments to pass to the residual axes subplot, by default {}</p></li>
+<li><p><strong>fit_ax_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional arguments to pass to the fit axes subplot, by default {}</p></li>
+<li><p><strong>data_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional arguments to pass to data plotting, by default {}</p></li>
+<li><p><strong>fit_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional arguments to pass to the fitted model plotting, by default {}</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary of figures. Depending on the options chosen, the keys are <cite>fit</cite>,
+<cite>corner</cite>, <cite>chisq</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">grblc.fitting</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">Lightcurve</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">W07</span><span class="p">()</span>
+<span class="n">xdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">yerr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">xdata</span><span class="p">))</span>
+<span class="n">ydata</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">yerr</span>
+<span class="n">lc</span> <span class="o">=</span> <span class="n">Lightcurve</span><span class="p">(</span><span class="n">xdata</span><span class="o">=</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="o">=</span><span class="n">ydata</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">yerr</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+<span class="n">lc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="mf">4.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">12.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">lc</span><span class="o">.</span><span class="n">show_fit</span><span class="p">(</span><span class="n">detailed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/grblc.fitting_1_190.png" src="_images/grblc.fitting_1_190.png" />
+<img alt="_images/grblc.fitting_1_191.png" src="_images/grblc.fitting_1_191.png" />
+<img alt="_images/grblc.fitting_1_192.png" src="_images/grblc.fitting_1_192.png" />
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>[[Fit Statistics]]
+    # fitting method   = emcee
+    # function evals   = 500000
+    # data points      = 15
+    # variables        = 4
+    chi-square         = 13.2666821
+    reduced chi-square = 1.20606201
+    Akaike info crit   = 6.15808380
+    Bayesian info crit = 8.99028461
+[[Variables]]
+    T:      4.93163262 +/- 0.12232580 (2.48%) (init = 4.936441)
+    F:     -11.8315478 +/- 0.09882103 (0.84%) (init = -11.82847)
+    alpha:  1.52121266 +/- 0.03778952 (2.48%) (init = 1.524132)
+    t:      0.35327607 +/- 1.97458593 (558.94%) (init = 0.3657104)
+</pre></div>
+</div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.to_df">
+<span class="sig-name descname"><span class="pre">to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_space</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lin'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.to_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.to_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that returns a Pandas DataFrames of the lightcurve data.</p>
+<blockquote>
+<div><p>You can specify the data to be returned in either logarithmic (<cite>log</cite>) or
+linear (<cite>lin</cite>) space.</p>
+<p>Each DataFrame contains the following columns:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><cite>time_sec</cite> : The time of the datapoint in seconds (xdata)</p></li>
+<li><p><cite>flux</cite> : The flux of the datapoint in erg cm(^{-2}) s(^{-1}) (ydata)</p></li>
+<li><p><cite>flux_err</cite> : The flux error of the datapoint in erg cm(^{-2}) s(^{-1}) (yerr)</p></li>
+<li><dl class="simple">
+<dt><a href="#id5"><span class="problematic" id="id6">**</span></a>attrs<span class="classifier">Any additional attributes of the datapoint as given in the</span></dt><dd><p>instantiation of the <a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve" title="grblc.fitting.lightcurve.Lightcurve"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lightcurve</span></code></a> object.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_space</strong> (<em>str</em><em>, </em><em>{&quot;log&quot;</em><em>, </em><em>&quot;lin&quot;}</em><em>, </em><em>optional</em>) – Whether the data returned will be in logarithmic or linear space,
+by default “log”</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>data</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If any “space” other than “log” and “lin” are specified.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.lightcurve.Lightcurve.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_space</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lin'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/lightcurve.html#Lightcurve.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.lightcurve.Lightcurve.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that returns a dictionary of the lightcurve data.</p>
+<blockquote>
+<div><p>You can specify the data to be in either logarithmic (<cite>log</cite>) or linear
+(<cite>lin</cite>) space.</p>
+<p>Each dictionary contains the following keys:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><cite>time_sec</cite> : The time of the datapoint in seconds (xdata)</p></li>
+<li><p><cite>flux</cite> : The flux of the datapoint in erg cm(^{-2}) s(^{-1}) (ydata)</p></li>
+</ol>
+<p>#. <cite>flux_err</cite> : The flux error of the datapoint in erg cm(^{-2}) s(^{-1})
+(yerr)</p>
+<p>#. <cite>**attrs</cite> : Any additional attributes of the datapoint as given in the
+instantiation of the <a class="reference internal" href="#grblc.fitting.lightcurve.Lightcurve" title="grblc.fitting.lightcurve.Lightcurve"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lightcurve</span></code></a> object.</p>
+</div></blockquote>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_space</strong> (<em>str</em><em>, </em><em>{&quot;log&quot;</em><em>, </em><em>&quot;lin&quot;}</em><em>, </em><em>optional</em>) – Whether the data returned will be in logarithmic or linear space,
+by default “lin”</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>data</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If any “space” other than “log” and “lin” are specified.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-grblc.fitting.model">
+<span id="grblc-fitting-model-module"></span><h2>grblc.fitting.model module<a class="headerlink" href="#module-grblc.fitting.model" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="grblc.fitting.model.Model">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grblc.fitting.model.</span></span><span class="sig-name descname"><span class="pre">Model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Parameter</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/model.html#Model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.model.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="simple">
+<dt>Model class for use with the <code class="xref py py-class docutils literal notranslate"><span class="pre">Lightcurve</span></code> class.</dt><dd><p>This class is a wrapper around a function that can be used to fit a lightcurve.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> (<em>Callable</em>) – Function to fit to.</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name to the function, by default the variable name of <cite>func</cite></p></li>
+<li><p><strong>slug</strong> (<em>str</em><em>, </em><em>optional</em>) – The shortened and simplified name of the function, by default <cite>name</cite></p></li>
+<li><p><strong>func_args</strong> (<em>List</em><em>[</em><em>Parameter</em><em>]</em><em>, </em><em>optional</em>) – Function arguments in the form of a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code>, by default None</p></li>
+<li><p><strong>bounds</strong> (<em>list</em><em>, </em><em>optional</em>) – Bounds by which <cite>x</cite> may be varied in fitting, by default <code class="docutils literal notranslate"><span class="pre">[-np.inf,</span> <span class="pre">np.inf,</span> <span class="pre">-np.inf,</span> <span class="pre">np.inf]</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – Makes sure all parameter names in <cite>func_args</cite> are actual
+    parameters to the function.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.model.Model.SIMPLE_BPL">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SIMPLE_BPL</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/model.html#Model.SIMPLE_BPL"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.model.Model.SIMPLE_BPL" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Simple broken power law model</dt><dd><p>This is an empirical piece-wise model for GRB lightcurve afterglows.</p>
+<p>The function is as follows:</p>
+<p>[f(t) = left { begin{array}{ll} displaystyle{F_i left (frac{t}{T_i} right)^{-alpha_1} } &amp; {rm for} t &lt; T_i \ displaystyle{F_i left ( frac{t}{T_i} right )^{-alpha_2} } &amp; {rm for} t ge T_i, \ end{array} right . ]</p>
+<p>where the transition from the exponential to the power law occurs at the point
+((T_i), (F_i)), (alpha_1) determines the temporal decay index of the initial
+power law, and (alpha_2) is the temporal decay index of the final power law.</p>
+<p>As implemented, log space is used for the time (sec) and flux
+(erg cm(^{-2}) s(^{-1})). This means that for a light curve in which the
+afterglow plateau phase ends at 10,000 seconds corresponds to a (T_i) of 5.</p>
+<dl class="simple">
+<dt>Pre-defined priors on these parameters are:</dt><dd><ul class="simple">
+<li><p>T : Uniform(1e-10, 10)</p></li>
+<li><p>F : Uniform(-20, 2)</p></li>
+<li><p>(alpha_1) : Uniform(-5, 5)</p></li>
+<li><p>(alpha_2) : Uniform(-5, 5)</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The simple broken power law model.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#grblc.fitting.model.Model" title="grblc.fitting.model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a></p>
+</dd>
+</dl>
+<p>An example lightcurve is shown below:</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">grblc.fitting</span> <span class="kn">import</span> <span class="n">Model</span>
+
+<span class="n">sbpl</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">SIMPLE_BPL</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">T</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">alpha1</span><span class="p">,</span> <span class="n">alpha2</span> <span class="o">=</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.5</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sbpl</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">sbpl</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log Time (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;log Flux (erg cm$^{-2}$ s$^{-1}$)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/grblc.fitting_2_0.png" src="_images/grblc.fitting_2_0.png" />
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.model.Model.SMOOTH_BPL">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SMOOTH_BPL</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/model.html#Model.SMOOTH_BPL"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.model.Model.SMOOTH_BPL" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Smooth broken power law model</dt><dd><p>This is an empirical piece-wise model for GRB lightcurve afterglows.</p>
+<p>The function is as follows:</p>
+<p>[f(t) = F_i left (left (frac{t}{T_i} right )^{Salpha_1} + left (frac{t}{T_i} right )^{S alpha_2} right )^{-frac{1}{S}}]</p>
+<p>where the transition from the exponential to the power law occurs at the
+point ((T_i), (F_i)), (alpha_1) determines the temporal decay index of
+the initial power law, and (alpha_2) is the temporal decay index of the
+final power law, and (S) is the smoothing factor.</p>
+<p>As implemented, log space is used for the time (sec) and flux
+(erg cm(^{-2}) s(^{-1})). This means that for a light curve in which the
+afterglow plateau phase ends at 10,000 seconds corresponds to a (T_i) of 5.</p>
+<dl class="simple">
+<dt>Pre-defined priors on these parameters are::</dt><dd><ul class="simple">
+<li><p>(T_i) : Uniform(1e-10, 10)</p></li>
+<li><p>(F_i) : Uniform(-20, 2)</p></li>
+<li><p>(alpha_1) : Uniform(-5, 5)</p></li>
+<li><p>(alpha_2) : Uniform(-5, 5)</p></li>
+<li><p>(S) : Uniform(-10, 2)</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The simple broken power law model.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#grblc.fitting.model.Model" title="grblc.fitting.model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a></p>
+</dd>
+</dl>
+<p>An example lightcurve is shown below:</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">grblc.fitting</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="n">sbpl</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">SMOOTH_BPL</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">T</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">alpha1</span><span class="p">,</span> <span class="n">alpha2</span><span class="p">,</span> <span class="n">S</span> <span class="o">=</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.5</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sbpl</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">sbpl</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log Time (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;log Flux (erg cm\(^{-2}\) s\(^{-1}\))&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/grblc.fitting_3_0.png" src="_images/grblc.fitting_3_0.png" />
+</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.model.Model.W07">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">W07</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vary_t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/model.html#Model.W07"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.model.Model.W07" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Willingale et al. (2007) model</dt><dd><p>This is a phenomenological model for GRB lightcurve afterglows
+popularized in the paper by Willingale et. al, (2007). <a class="footnote-reference brackets" href="#w07" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+<p>Taken from his paper, it is as follows:</p>
+<p>[f(t) = left { begin{array}{ll}displaystyle{F_i exp{left ( alpha_i left( 1 - frac{t}{T_i} right)
+right )} exp{left (- frac{t_i}{t} right )}} &amp; {rm for} t &lt; T_i \ ~ &amp; ~ \
+displaystyle{F_i left ( frac{t}{T_i} right )^{-alpha_i} exp{left ( - frac{t_i}{t} right )}} &amp;
+{rm for} t ge T_i, \end{array} right .]</p>
+<p>where the transition from the exponential to the power law occurs at the
+point ((T_i), (F_i)), (alpha) determines the temporal decay index of the
+power law, and (t_i) is the time of the initial rise of the lightcurve.</p>
+<p>As implemented, log space is used for the time (sec) and flux
+(erg cm(^{-2}) s(^{-1})). This means that for a light curve in which the
+afterglow plateau phase ends at 10,000 seconds corresponds to a (T_i) of 5.</p>
+<dl class="simple">
+<dt>Pre-defined priors on these parameters are:</dt><dd><ul class="simple">
+<li><p>(T_i) : Uniform(1e-10, 10)</p></li>
+<li><p>(F_i) : Uniform(-20, 2)</p></li>
+<li><p>(alpha) : Uniform(0, 5)</p></li>
+<li><p>(t) : Uniform(0, inf)</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vary_t</strong> (<em>bool</em><em>, </em><em>optional</em>) – The fourth parameter to this <a class="reference internal" href="#grblc.fitting.model.Model" title="grblc.fitting.model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a>, <cite>t</cite>, often does not vary
+the lightcurve in any way and thus is sometimes set to zero. This allows
+the user to make the fitter not vary it. Otherwise, you can set the vary
+parameter to zero via <code class="docutils literal notranslate"><span class="pre">Model[Parameter.name].vary</span> <span class="pre">=</span> <span class="pre">False</span></code>. By default True.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Willingale et al. (2007) model.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#grblc.fitting.model.Model" title="grblc.fitting.model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a></p>
+</dd>
+</dl>
+<p>An example lightcurve is shown below:</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">grblc.fitting</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="n">w07</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">W07</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">T</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">w07</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">w07</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log Time (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;log Flux (erg cm$^{-2}$ s$^{-1}$)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/grblc.fitting_4_0.png" src="_images/grblc.fitting_4_0.png" />
+</div>
+</div>
+<aside class="footnote brackets" id="w07" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://arxiv.org/abs/astro-ph/0612031">https://arxiv.org/abs/astro-ph/0612031</a></p>
+</aside>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="grblc.fitting.model.Model.func">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">func</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span></em><a class="headerlink" href="#grblc.fitting.model.Model.func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="grblc.fitting.model.Model.func_args">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">func_args</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Parameter</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#grblc.fitting.model.Model.func_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="grblc.fitting.model.Models">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grblc.fitting.model.</span></span><span class="sig-name descname"><span class="pre">Models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#grblc.fitting.model.Model" title="grblc.fitting.model.Model"><span class="pre">Model</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/model.html#Models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.model.Models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Collection of models to fit together.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="grblc.fitting.model.Models.func">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">func</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span></em><a class="headerlink" href="#grblc.fitting.model.Models.func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="grblc.fitting.model.Models.func_args">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">func_args</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Parameter</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#grblc.fitting.model.Models.func_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="grblc.fitting.model.chisq">
+<span class="sig-prename descclassname"><span class="pre">grblc.fitting.model.</span></span><span class="sig-name descname"><span class="pre">chisq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_reduced</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/model.html#chisq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.model.chisq" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function to calculate the chi-squared value of a given proposed solution:</p>
+<div class="math notranslate nohighlight">
+\[\chi^2 = \sum_{i=1}^N \frac{(y_i - f(x_i))^2}{\sigma_i^2}\]</div>
+<p>The reduced <span class="math notranslate nohighlight">\(\chi^2\)</span> value, <span class="math notranslate nohighlight">\(\chi^2_\nu\)</span>, can also be returned, and is calculated as:</p>
+<div class="math notranslate nohighlight">
+\[\chi^2_\nu = \frac{\chi^2}{{\rm \# ~data~ points} - {\rm \# ~free~ params}}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>array_like</em>) – The x and y values of the data points.</p></li>
+<li><p><strong>y</strong> (<em>array_like</em>) – The x and y values of the data points.</p></li>
+<li><p><strong>sigma</strong> (<em>array_like</em>) – Standard error of the data points.</p></li>
+<li><p><strong>model</strong> (<em>callable</em>) – The model to be fit to the data. Should take the form of a function that takes <cite>x</cite>, parameters <cite>p</cite>, and returns <cite>y</cite> in the form of <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">model(x,</span> <span class="pre">*p)</span></code>.</p></li>
+<li><p><strong>p</strong> (<em>array_like</em>) – List of parameter values to be used in the model.</p></li>
+<li><p><strong>return_reduced</strong> (<em>bool</em><em>, </em><em>optional</em>) – Determines whether the reduced <span class="math notranslate nohighlight">\(\chi^2\)</span> will be returned as well, by default False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(\chi^2\)</span> for each point in the dataset, along with the reduced (chi^2) value (if return_reduced=True)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-grblc.fitting.outlier">
+<span id="grblc-fitting-outlier-module"></span><h2>grblc.fitting.outlier module<a class="headerlink" href="#module-grblc.fitting.outlier" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="grblc.fitting.outlier.OutlierPlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grblc.fitting.outlier.</span></span><span class="sig-name descname"><span class="pre">OutlierPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hover_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/outlier.html#OutlierPlot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.outlier.OutlierPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.outlier.OutlierPlot.init_plot">
+<span class="sig-name descname"><span class="pre">init_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hover</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/outlier.html#OutlierPlot.init_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.outlier.OutlierPlot.init_plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.outlier.OutlierPlot.outlier_check_">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">outlier_check_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/outlier.html#OutlierPlot.outlier_check_"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.outlier.OutlierPlot.outlier_check_" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.outlier.OutlierPlot.prompt">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">prompt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/outlier.html#OutlierPlot.prompt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.outlier.OutlierPlot.prompt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.outlier.OutlierPlot.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/outlier.html#OutlierPlot.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.outlier.OutlierPlot.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="grblc.fitting.outlier.OutlierPlot.update_plot">
+<span class="sig-name descname"><span class="pre">update_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/grblc/fitting/outlier.html#OutlierPlot.update_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#grblc.fitting.outlier.OutlierPlot.update_plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-grblc.fitting">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-grblc.fitting" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="grblc.search.html" class="btn btn-neutral float-right" title="grblc.search package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="grblc.convert.html" class="btn btn-neutral float-left" title="grblc.convert package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, Sam Young.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,599 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>grblc.convert.sfd.json_serializers &mdash; grbLC 0.1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/jupyter-sphinx.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/thebelab.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> grbLC
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">grblc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../authors.html">Credits</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">grbLC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>grblc.convert.sfd.json_serializers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for grblc.convert.sfd.json_serializers</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">#</span>
+<span class="c1"># json_serializers.py</span>
+<span class="c1"># Contains JSON (de)serializers for:</span>
+<span class="c1">#     astropy.units.Quantity</span>
+<span class="c1">#     astropy.coordinates.SkyCoord</span>
+<span class="c1">#     numpy.ndarray</span>
+<span class="c1">#     numpy.dtype</span>
+<span class="c1">#     numpy.floating</span>
+<span class="c1">#     numpy.integer</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2016-2017  Gregory M. Green</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software; you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation; either version 2 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License along</span>
+<span class="c1"># with this program; if not, write to the Free Software Foundation, Inc.,</span>
+<span class="c1"># 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.</span>
+<span class="c1">#</span>
+<span class="c1"># np.fromstring() from deserialize_ndarray() has been changed to</span>
+<span class="c1"># np.frombuffer() as np.fromstring() is deprecated.</span>
+<span class="c1">#</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">import</span> <span class="nn">astropy.coordinates</span> <span class="k">as</span> <span class="nn">coords</span>
+<span class="kn">import</span> <span class="nn">astropy.units</span> <span class="k">as</span> <span class="nn">units</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">six</span>
+
+
+<div class="viewcode-block" id="deserialize_tuple"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.deserialize_tuple">[docs]</a><span class="k">def</span> <span class="nf">deserialize_tuple</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deserializes a JSONified tuple.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        d (:obj:`dict`): A dictionary representation of the tuple.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A tuple.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="serialize_dtype"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.serialize_dtype">[docs]</a><span class="k">def</span> <span class="nf">serialize_dtype</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Serializes a :obj:`numpy.dtype`.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        o (:obj:`numpy.dtype`): :obj:`dtype` to be serialized.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary that can be passed to :obj:`json.dumps`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">_type</span><span class="o">=</span><span class="s1">&#39;np.dtype&#39;</span><span class="p">,</span>
+            <span class="n">descr</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">_type</span><span class="o">=</span><span class="s1">&#39;np.dtype&#39;</span><span class="p">,</span>
+        <span class="n">descr</span><span class="o">=</span><span class="n">o</span><span class="o">.</span><span class="n">descr</span><span class="p">)</span></div>
+    <span class="c1"># res = []</span>
+    <span class="c1"># for k in range(len(o)):</span>
+    <span class="c1">#     res.append((o.names[k], str(o[k])))</span>
+    <span class="c1"># return dict(</span>
+    <span class="c1">#     _type=&#39;np.dtype&#39;,</span>
+    <span class="c1">#     desc=res)</span>
+
+
+<div class="viewcode-block" id="deserialize_dtype"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.deserialize_dtype">[docs]</a><span class="k">def</span> <span class="nf">deserialize_dtype</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deserializes a JSONified :obj:`numpy.dtype`.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        d (:obj:`dict`): A dictionary representation of a :obj:`dtype` object.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A :obj:`dtype` object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;descr&#39;</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;descr&#39;</span><span class="p">])</span>
+    <span class="n">descr</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;descr&#39;</span><span class="p">]:</span>
+        <span class="n">col_descr</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">col</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">col_descr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+                <span class="n">col_descr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">col_descr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">descr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">col_descr</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">descr</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="serialize_ndarray_b64"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.serialize_ndarray_b64">[docs]</a><span class="k">def</span> <span class="nf">serialize_ndarray_b64</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Serializes a :obj:`numpy.ndarray` in a format where the datatype and shape are</span>
+<span class="sd">    human-readable, but the array data itself is binary64 encoded.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        o (:obj:`numpy.ndarray`): :obj:`ndarray` to be serialized.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary that can be passed to :obj:`json.dumps`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">flags</span><span class="p">[</span><span class="s1">&#39;C_CONTIGUOUS&#39;</span><span class="p">]:</span>
+        <span class="n">o_data</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">o_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">o</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">data_b64</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">o_data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">_type</span><span class="o">=</span><span class="s1">&#39;np.ndarray&#39;</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">data_b64</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">o</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="n">shape</span><span class="o">=</span><span class="n">o</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="hint_tuples"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.hint_tuples">[docs]</a><span class="k">def</span> <span class="nf">hint_tuples</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Annotates tuples before JSON serialization, so that they can be</span>
+<span class="sd">    reconstructed during deserialization. Each tuple is converted into a</span>
+<span class="sd">    dictionary of the form:</span>
+<span class="sd">        {&#39;_type&#39;: &#39;tuple&#39;, &#39;items&#39;: (...)}</span>
+<span class="sd">    This function acts recursively on lists, so that tuples nested inside a list</span>
+<span class="sd">    (or doubly nested, triply nested, etc.) will also be annotated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">_type</span><span class="o">=</span><span class="s1">&#39;tuple&#39;</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">o</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">hint_tuples</span><span class="p">(</span><span class="n">el</span><span class="p">)</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">o</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">o</span></div>
+
+
+<div class="viewcode-block" id="serialize_ndarray_readable"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.serialize_ndarray_readable">[docs]</a><span class="k">def</span> <span class="nf">serialize_ndarray_readable</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Serializes a :obj:`numpy.ndarray` in a human-readable format.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        o (:obj:`numpy.ndarray`): :obj:`ndarray` to be serialized.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary that can be passed to :obj:`json.dumps`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">_type</span><span class="o">=</span><span class="s1">&#39;np.ndarray&#39;</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">o</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+        <span class="n">value</span><span class="o">=</span><span class="n">hint_tuples</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span></div>
+
+
+<div class="viewcode-block" id="serialize_ndarray_npy"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.serialize_ndarray_npy">[docs]</a><span class="k">def</span> <span class="nf">serialize_ndarray_npy</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Serializes a :obj:`numpy.ndarray` using numpy&#39;s built-in :obj:`save` function.</span>
+<span class="sd">    This produces totally unreadable (and very un-JSON-like) results (in &quot;npy&quot;</span>
+<span class="sd">    format), but it&#39;s basically guaranteed to work in 100% of cases.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        o (:obj:`numpy.ndarray`): :obj:`ndarray` to be serialized.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary that can be passed to :obj:`json.dumps`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">serialized</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;latin-1&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">_type</span><span class="o">=</span><span class="s1">&#39;np.ndarray&#39;</span><span class="p">,</span>
+        <span class="n">npy</span><span class="o">=</span><span class="n">serialized</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="deserialize_ndarray_npy"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.deserialize_ndarray_npy">[docs]</a><span class="k">def</span> <span class="nf">deserialize_ndarray_npy</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deserializes a JSONified :obj:`numpy.ndarray` that was created using numpy&#39;s</span>
+<span class="sd">    :obj:`save` function.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        d (:obj:`dict`): A dictionary representation of an :obj:`ndarray` object, created</span>
+<span class="sd">            using :obj:`numpy.save`.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        An :obj:`ndarray` object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;npy&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;latin-1&#39;</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="deserialize_ndarray"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.deserialize_ndarray">[docs]</a><span class="k">def</span> <span class="nf">deserialize_ndarray</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deserializes a JSONified :obj:`numpy.ndarray`. Can handle arrays serialized</span>
+<span class="sd">    using any of the methods in this module: :obj:`&quot;npy&quot;`, :obj:`&quot;b64&quot;`,</span>
+<span class="sd">    :obj:`&quot;readable&quot;`.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        d (`dict`): A dictionary representation of an :obj:`ndarray` object.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        An :obj:`ndarray` object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;data&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span>
+            <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]),</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">])</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;shape&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">x</span>
+    <span class="k">elif</span> <span class="s1">&#39;value&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;dtype&#39;</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="s1">&#39;npy&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">deserialize_ndarray_npy</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Malformed np.ndarray encoding.&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="serialize_quantity"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.serialize_quantity">[docs]</a><span class="k">def</span> <span class="nf">serialize_quantity</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Serializes an :obj:`astropy.units.Quantity`, for JSONification.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        o (:obj:`astropy.units.Quantity`): :obj:`Quantity` to be serialized.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary that can be passed to :obj:`json.dumps`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">_type</span><span class="o">=</span><span class="s1">&#39;astropy.units.Quantity&#39;</span><span class="p">,</span>
+        <span class="n">value</span><span class="o">=</span><span class="n">o</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">unit</span><span class="o">=</span><span class="n">o</span><span class="o">.</span><span class="n">unit</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="deserialize_quantity"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.deserialize_quantity">[docs]</a><span class="k">def</span> <span class="nf">deserialize_quantity</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deserializes a JSONified :obj:`astropy.units.Quantity`.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        d (:obj:`dict`): A dictionary representation of a :obj:`Quantity` object.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A :obj:`Quantity` object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">(</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">],</span>
+        <span class="n">unit</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;unit&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="serialize_skycoord"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.serialize_skycoord">[docs]</a><span class="k">def</span> <span class="nf">serialize_skycoord</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Serializes an :obj:`astropy.coordinates.SkyCoord`, for JSONification.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        o (:obj:`astropy.coordinates.SkyCoord`): :obj:`SkyCoord` to be serialized.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary that can be passed to :obj:`json.dumps`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">representation</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">representation_type</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">represent_as</span><span class="p">(</span><span class="s1">&#39;spherical&#39;</span><span class="p">)</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">_type</span><span class="o">=</span><span class="s1">&#39;astropy.coordinates.SkyCoord&#39;</span><span class="p">,</span>
+        <span class="n">frame</span><span class="o">=</span><span class="n">frame</span><span class="p">,</span>
+        <span class="n">representation_type</span><span class="o">=</span><span class="n">representation</span><span class="p">,</span>
+        <span class="n">lon</span><span class="o">=</span><span class="n">r</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span>
+        <span class="n">lat</span><span class="o">=</span><span class="n">r</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">distance</span><span class="o">.</span><span class="n">unit</span><span class="o">.</span><span class="n">to_string</span><span class="p">()):</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;distance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">distance</span>
+
+    <span class="k">return</span> <span class="n">d</span></div>
+
+
+<div class="viewcode-block" id="deserialize_skycoord"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.deserialize_skycoord">[docs]</a><span class="k">def</span> <span class="nf">deserialize_skycoord</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deserializes a JSONified :obj:`astropy.coordinates.SkyCoord`.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        d (:obj:`dict`): A dictionary representation of a :obj:`SkyCoord` object.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A :obj:`SkyCoord` object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;distance&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;distance&#39;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">coords</span><span class="o">.</span><span class="n">SkyCoord</span><span class="p">(</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="n">frame</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;frame&#39;</span><span class="p">],</span>
+        <span class="n">representation_type</span><span class="o">=</span><span class="s1">&#39;spherical&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_encoder"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.get_encoder">[docs]</a><span class="k">def</span> <span class="nf">get_encoder</span><span class="p">(</span><span class="n">ndarray_mode</span><span class="o">=</span><span class="s1">&#39;b64&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a JSON encoder that can handle:</span>
+<span class="sd">        * :obj:`numpy.ndarray`</span>
+<span class="sd">        * :obj:`numpy.floating` (converted to :obj:`float`)</span>
+<span class="sd">        * :obj:`numpy.integer` (converted to :obj:`int`)</span>
+<span class="sd">        * :obj:`numpy.dtype`</span>
+<span class="sd">        * :obj:`astropy.units.Quantity`</span>
+<span class="sd">        * :obj:`astropy.coordinates.SkyCoord`</span>
+<span class="sd">    Args:</span>
+<span class="sd">        ndarray_mode (Optional[:obj:`str`]): Which method to use to serialize</span>
+<span class="sd">            :obj:`numpy.ndarray` objects. Defaults to :obj:`&#39;b64&#39;`, which converts the</span>
+<span class="sd">            array data to binary64 encoding (non-human-readable), and stores the</span>
+<span class="sd">            datatype/shape in human-readable formats. Other options are</span>
+<span class="sd">            :obj:`&#39;readable&#39;`, which produces fully human-readable output, and</span>
+<span class="sd">            :obj:`&#39;npy&#39;`, which uses numpy&#39;s built-in :obj:`save` function and</span>
+<span class="sd">            produces completely unreadable output. Of all the methods :obj:`&#39;npy&#39;`</span>
+<span class="sd">            is the most reliable, but also least human-readable. :obj:`&#39;readable&#39;`</span>
+<span class="sd">            produces the most human-readable output, but is the least reliable</span>
+<span class="sd">            and loses precision.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A subclass of :obj:`json.JSONEncoder`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Use specified numpy.ndarray serialization mode</span>
+    <span class="n">serialize_fns</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;b64&#39;</span><span class="p">:</span> <span class="n">serialize_ndarray_b64</span><span class="p">,</span>
+        <span class="s1">&#39;readable&#39;</span><span class="p">:</span> <span class="n">serialize_ndarray_readable</span><span class="p">,</span>
+        <span class="s1">&#39;npy&#39;</span><span class="p">:</span> <span class="n">serialize_ndarray_npy</span><span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">ndarray_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">serialize_fns</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;&quot;ndarray_mode&quot; must be one of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">serialize_fns</span><span class="o">.</span><span class="n">keys</span><span class="p">))</span>
+
+    <span class="n">serialize_ndarray</span> <span class="o">=</span> <span class="n">serialize_fns</span><span class="p">[</span><span class="n">ndarray_mode</span><span class="p">]</span>
+
+    <span class="k">class</span> <span class="nc">MultiJSONEncoder</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A JSON encoder that can handle:</span>
+<span class="sd">            * :obj:`numpy.ndarray`</span>
+<span class="sd">            * :obj:`numpy.floating` (converted to :obj:`float`)</span>
+<span class="sd">            * :obj:`numpy.integer` (converted to :obj:`int`)</span>
+<span class="sd">            * :obj:`numpy.dtype`</span>
+<span class="sd">            * :obj:`astropy.units.Quantity`</span>
+<span class="sd">            * :obj:`astropy.coordinates.SkyCoord`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">coords</span><span class="o">.</span><span class="n">SkyCoord</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">serialize_skycoord</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">serialize_quantity</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">serialize_ndarray</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">serialize_dtype</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">void</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">o</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">o</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">MultiJSONEncoder</span></div>
+
+
+<div class="viewcode-block" id="MultiJSONDecoder"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.MultiJSONDecoder">[docs]</a><span class="k">class</span> <span class="nc">MultiJSONDecoder</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONDecoder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A JSON decoder that can handle:</span>
+<span class="sd">        * :obj:`numpy.ndarray`</span>
+<span class="sd">        * :obj:`numpy.dtype`</span>
+<span class="sd">        * :obj:`astropy.units.Quantity`</span>
+<span class="sd">        * :obj:`astropy.coordinates.SkyCoord`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">JSONDecoder</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">object_hook</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">object_hook</span><span class="p">,</span>
+            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MultiJSONDecoder.object_hook"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.json_serializers.MultiJSONDecoder.object_hook">[docs]</a>    <span class="k">def</span> <span class="nf">object_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;_type&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;astropy.coordinates.SkyCoord&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">deserialize_skycoord</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;astropy.units.Quantity&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">deserialize_quantity</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;np.ndarray&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">deserialize_ndarray</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;np.dtype&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">deserialize_dtype</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;tuple&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">deserialize_tuple</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, Sam Young.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
