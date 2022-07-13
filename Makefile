@@ -75,8 +75,9 @@ docs: ## generate Sphinx HTML documentation, including API docs
 	$(MAKE) -C docs_src html
 	mkdir -p docs/
 	cp -r docs_src/_build/html/* docs
-	$(BROWSER) docs/index.html
+	touch docs/.nojekyll
 	rm -rf docs_src/_build/html/
+	$(BROWSER) docs/index.html
 
 servedocs: docs ## compile the docs watching for changes
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs_src html' -R -D .
