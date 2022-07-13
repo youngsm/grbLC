@@ -37,9 +37,9 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.extlinks",
     "sphinx.ext.mathjax",
-    "sphinx_math_dollar",
+    # "sphinx_math_dollar",
     "jupyter_sphinx",
-    # "sphinx_rtd_theme"
+    "sphinx_rtd_theme"
     # "sphinx_press_theme",
     # "myst_parser",
 ]
@@ -105,7 +105,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = ["build", "Thumbs.db", ".DS_Store"]
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = "sphinx"
@@ -123,7 +123,7 @@ os.environ["PYTHONPATH"] = ":".join((package_path, os.environ.get("PYTHONPATH", 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "press"
+html_theme = "sphinx_rtd_theme"
 
 # html_sidebars = {
 #     "**": [

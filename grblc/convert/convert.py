@@ -11,6 +11,7 @@ from pandas import read_csv
 
 from .constants import ebv2A_b_df
 from .constants import photometry
+from ..util import get_dir
 
 def ebv2A_b(grb: str, bandpass: str, ra="", dec=""):
     r"""A function that returns the galactic extinction correction
@@ -367,19 +368,6 @@ def convertGRB(
         DataFrame.from_dict(converted_debug).to_csv(save_path, sep="\t", index=False)
 
 
-# small setter to set the main conversion directory
-def set_dir(dir):
-    global directory
-    directory = os.path.abspath(dir)
-    return directory
-
-
-# getter to return conversion directory
-def get_dir():
-    global directory
-    return directory
-
-
 # Converts all magnitude tables that are in the path format of
 # get_dir()/*_flux/<GRB>.txt
 def convert_all(debug=False):
@@ -431,11 +419,7 @@ def convert_all(debug=False):
 
 # simple checker that downloads the SFD dust map if it's not already there
 def _check_dust_maps():
-
     data_dir = os.path.join(os.path.dirname(__file__), "extinction_maps")
     if not os.path.exists(os.path.join(data_dir, "sfd")):
         from .sfd import sfd
         sfd.fetch()
-
-# sets directory to the current working directory, or whatever folder you're currently in
-directory = os.getcwd()

@@ -1,0 +1,378 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>grblc.convert.sfd.sfd &mdash; grbLC 0.1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/jupyter-sphinx.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/thebelab.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/thebelab-helper.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> grbLC
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">grblc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../authors.html">Credits</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">grbLC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>grblc.convert.sfd.sfd</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for grblc.convert.sfd.sfd</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">#</span>
+<span class="c1"># sfd.py</span>
+<span class="c1"># Reads the Schlegel, Finkbeiner &amp; Davis (1998; SFD) dust reddening map.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2016-2018  Gregory M. Green, Edward F. Schlafly</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software; you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation; either version 2 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License along</span>
+<span class="c1"># with this program; if not, write to the Free Software Foundation, Inc.,</span>
+<span class="c1"># 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.</span>
+<span class="c1">#</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">astropy.io.fits</span> <span class="k">as</span> <span class="nn">fits</span>
+<span class="kn">import</span> <span class="nn">astropy.wcs</span> <span class="k">as</span> <span class="nn">wcs</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">map_coordinates</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">dustexceptions</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">fetch_utils</span>
+<span class="kn">from</span> <span class="nn">.map_base</span> <span class="kn">import</span> <span class="n">DustMap</span>
+<span class="kn">from</span> <span class="nn">.map_base</span> <span class="kn">import</span> <span class="n">ensure_flat_galactic</span>
+<span class="kn">from</span> <span class="nn">.map_base</span> <span class="kn">import</span> <span class="n">WebDustMap</span>
+<span class="kn">from</span> <span class="nn">.std_paths</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="SFDBase"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.sfd.SFDBase">[docs]</a><span class="k">class</span> <span class="nc">SFDBase</span><span class="p">(</span><span class="n">DustMap</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Queries maps stored in the same format as Schlegel, Finkbeiner &amp; Davis (1998).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">map_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">map_name_long</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">poles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ngp&#39;</span><span class="p">,</span> <span class="s1">&#39;sgp&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_fname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            base_fname (str): The map should be stored in two FITS files, named</span>
+<span class="sd">                ``base_fname + &#39;_&#39; + X + &#39;.fits&#39;``, where ``X`` is ``&#39;ngp&#39;`` and</span>
+<span class="sd">                ``&#39;sgp&#39;``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">pole</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">poles</span><span class="p">:</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">base_fname</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">pole</span><span class="si">}</span><span class="s1">.fits&#39;</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="k">as</span> <span class="n">hdulist</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">pole</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">wcs</span><span class="o">.</span><span class="n">WCS</span><span class="p">(</span><span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">)]</span>
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">dustexceptions</span><span class="o">.</span><span class="n">data_missing_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">map_name</span><span class="p">,</span>
+                                                          <span class="bp">self</span><span class="o">.</span><span class="n">map_name_long</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="n">error</span>
+
+<div class="viewcode-block" id="SFDBase.query"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.sfd.SFDBase.query">[docs]</a>    <span class="nd">@ensure_flat_galactic</span>
+    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the map value at the specified location(s) on the sky.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            coords (`astropy.coordinates.SkyCoord`): The coordinates to query.</span>
+<span class="sd">            order (Optional[int]): Interpolation order to use. Defaults to `1`,</span>
+<span class="sd">                for linear interpolation.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            A float array containing the map value at every input coordinate.</span>
+<span class="sd">            The shape of the output will be the same as the shape of the</span>
+<span class="sd">            coordinates stored by `coords`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">deg</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">pole</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">poles</span><span class="p">:</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">deg</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">pole</span> <span class="o">==</span> <span class="s1">&#39;ngp&#39;</span> <span class="k">else</span> <span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">deg</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+                <span class="n">data</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">pole</span><span class="p">]</span>
+                <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">wcs_world2pix</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">deg</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="n">coords</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">deg</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">out</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">map_coordinates</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">out</span></div></div>
+
+
+<div class="viewcode-block" id="SFDQuery"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.sfd.SFDQuery">[docs]</a><span class="k">class</span> <span class="nc">SFDQuery</span><span class="p">(</span><span class="n">SFDBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Queries the Schlegel, Finkbeiner &amp; Davis (1998) dust reddening map.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">map_name</span> <span class="o">=</span> <span class="s1">&#39;sfd&#39;</span>
+    <span class="n">map_name_long</span> <span class="o">=</span> <span class="s2">&quot;SFD&#39;98&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">map_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            map_dir (Optional[str]): The directory containing the SFD map.</span>
+<span class="sd">                Defaults to `None`, which means that `dustmaps` will look in its</span>
+<span class="sd">                default data directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">map_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">map_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">(),</span> <span class="s1">&#39;sfd&#39;</span><span class="p">)</span>
+
+        <span class="n">base_fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">map_dir</span><span class="p">,</span> <span class="s1">&#39;SFD_dust_4096&#39;</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">base_fname</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SFDQuery.query"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.sfd.SFDQuery.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns E(B-V) at the specified location(s) on the sky. See Table 6 of</span>
+<span class="sd">        Schlafly &amp; Finkbeiner (2011) for instructions on how to convert this</span>
+<span class="sd">        quantity to extinction in various passbands.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            coords (`astropy.coordinates.SkyCoord`): The coordinates to query.</span>
+<span class="sd">            order (Optional[int]): Interpolation order to use. Defaults to `1`,</span>
+<span class="sd">                for linear interpolation.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            A float array containing the SFD E(B-V) at every input coordinate.</span>
+<span class="sd">            The shape of the output will be the same as the shape of the</span>
+<span class="sd">            coordinates stored by `coords`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SFDWebQuery"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.sfd.SFDWebQuery">[docs]</a><span class="k">class</span> <span class="nc">SFDWebQuery</span><span class="p">(</span><span class="n">WebDustMap</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remote query over the web for the Schlegel, Finkbeiner &amp; Davis (1998) dust</span>
+<span class="sd">    map.</span>
+<span class="sd">    This query object does not require a local version of the data, but rather</span>
+<span class="sd">    an internet connection to contact the web API. The query functions have the</span>
+<span class="sd">    same inputs and outputs as their counterparts in ``SFDQuery``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">api_url</span><span class="o">=</span><span class="n">api_url</span><span class="p">,</span>
+            <span class="n">map_name</span><span class="o">=</span><span class="s1">&#39;sfd&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="fetch"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.sfd.fetch">[docs]</a><span class="k">def</span> <span class="nf">fetch</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads the Schlegel, Finkbeiner &amp; Davis (1998) dust map, placing it in</span>
+<span class="sd">    the data directory for `sfd`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">doi</span> <span class="o">=</span> <span class="s1">&#39;10.7910/DVN/EWCNL5&#39;</span>
+
+    <span class="k">for</span> <span class="n">pole</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;ngp&#39;</span><span class="p">,</span> <span class="s1">&#39;sgp&#39;</span><span class="p">]:</span>
+        <span class="n">requirements</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;SFD_dust_4096_</span><span class="si">{</span><span class="n">pole</span><span class="si">}</span><span class="s1">.fits&#39;</span><span class="p">}</span>
+        <span class="n">local_fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">data_dir</span><span class="p">(),</span>
+            <span class="s1">&#39;sfd&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;SFD_dust_4096_</span><span class="si">{</span><span class="n">pole</span><span class="si">}</span><span class="s1">.fits&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Downloading SFD data file to </span><span class="si">{</span><span class="n">local_fname</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">fetch_utils</span><span class="o">.</span><span class="n">dataverse_download_doi</span><span class="p">(</span>
+            <span class="n">doi</span><span class="p">,</span>
+            <span class="n">local_fname</span><span class="p">,</span>
+            <span class="n">file_requirements</span><span class="o">=</span><span class="n">requirements</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, Sam Young.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
