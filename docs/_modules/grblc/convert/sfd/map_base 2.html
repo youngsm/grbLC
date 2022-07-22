@@ -1,0 +1,792 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>grblc.convert.sfd.map_base &#8212; grbLC 0.1.1 documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/thebelab.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/thebelab-helper.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../../_static/grblc.svg" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../installation.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../../modules.html">
+   grblc
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../../grblc.html">
+     grblc package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../grblc.convert.html">
+       grblc.convert package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../grblc.fitting.html">
+       grblc.fitting package
+      </a>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../../grblc.search.html">
+       grblc.search package
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+      <label for="toctree-checkbox-3">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../../grblc.search.ads.html">
+         grblc.search.ads package
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../../grblc.search.gcn.html">
+         grblc.search.gcn package
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../usage.html">
+   Usage
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../contributing.html">
+   Contributing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../authors.html">
+   Credits
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1></h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <h1>Source code for grblc.convert.sfd.map_base</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">#</span>
+<span class="c1"># map2d.py</span>
+<span class="c1"># A generic interface to a 2D dust reddening map.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (C) 2016  Gregory M. Green</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software; you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation; either version 2 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License along</span>
+<span class="c1"># with this program; if not, write to the Free Software Foundation, Inc.,</span>
+<span class="c1"># 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.</span>
+<span class="c1">#</span>
+<span class="c1"># This file has been modified by S. Young to remove all functions using</span>
+<span class="c1"># the `healpix` package. This is to allow querying the SFD map on Windows</span>
+<span class="c1"># machines.</span>
+<span class="c1">#</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="kn">import</span> <span class="nn">astropy.coordinates</span> <span class="k">as</span> <span class="nn">coordinates</span>
+<span class="kn">import</span> <span class="nn">astropy.units</span> <span class="k">as</span> <span class="nn">units</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">json_serializers</span>
+
+<span class="c1"># import time</span>
+
+<div class="viewcode-block" id="ensure_coord_type"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.ensure_coord_type">[docs]</a><span class="k">def</span> <span class="nf">ensure_coord_type</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A decorator for class methods of the form</span>
+<span class="sd">    .. code-block:: python</span>
+<span class="sd">        Class.method(self, coords, **kwargs)</span>
+<span class="sd">    where ``coords`` is an :obj:`astropy.coordinates.SkyCoord` object.</span>
+<span class="sd">    The decorator raises a :obj:`TypeError` if the ``coords`` that gets passed to</span>
+<span class="sd">    ``Class.method`` is not an :obj:`astropy.coordinates.SkyCoord` instance.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        f (class method): A function with the signature</span>
+<span class="sd">            ``(self, coords, **kwargs)``, where ``coords`` is a :obj:`SkyCoord`</span>
+<span class="sd">            object containing an array.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A function that raises a :obj:`TypeError` if ``coords`` is not an</span>
+<span class="sd">        :obj:`astropy.coordinates.SkyCoord` object, but which otherwise behaves</span>
+<span class="sd">        the same as the decorated function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_wrapper_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">SkyCoord</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;`coords` must be an astropy.coordinates.SkyCoord object.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_wrapper_func</span></div>
+
+
+<div class="viewcode-block" id="reshape_coords"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.reshape_coords">[docs]</a><span class="k">def</span> <span class="nf">reshape_coords</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+    <span class="n">pos_attr</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;ra&#39;</span><span class="p">,</span> <span class="s1">&#39;dec&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;distance&#39;</span><span class="p">]</span>
+    <span class="n">pos_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">pos_attr</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">pos_attr</span><span class="p">):</span>
+            <span class="n">pos_kwargs</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">()</span></div>
+            <span class="c1"># TODO: finish reshape</span>
+
+
+<div class="viewcode-block" id="coords_to_shape"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.coords_to_shape">[docs]</a><span class="k">def</span> <span class="nf">coords_to_shape</span><span class="p">(</span><span class="n">gal</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">gal</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">deg</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">gal</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">deg</span>
+
+    <span class="n">has_dist</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gal</span><span class="o">.</span><span class="n">distance</span><span class="p">,</span> <span class="s1">&#39;kpc&#39;</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">gal</span><span class="o">.</span><span class="n">distance</span><span class="o">.</span><span class="n">kpc</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">kpc</span> <span class="k">if</span> <span class="n">has_dist</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">SkyCoord</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;galactic&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ensure_flat_frame"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.ensure_flat_frame">[docs]</a><span class="k">def</span> <span class="nf">ensure_flat_frame</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_wrapper_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">frame</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="n">frame</span><span class="p">):</span>
+            <span class="n">coords_transf</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">transform_to</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">coords_transf</span> <span class="o">=</span> <span class="n">coords</span>
+
+        <span class="n">is_array</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">coords</span><span class="o">.</span><span class="n">isscalar</span>
+        <span class="k">if</span> <span class="n">is_array</span><span class="p">:</span>
+            <span class="n">orig_shape</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">shape_flat</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">orig_shape</span><span class="p">),)</span>
+            <span class="n">coords_transf</span> <span class="o">=</span> <span class="n">coords_to_shape</span><span class="p">(</span><span class="n">coords_transf</span><span class="p">,</span> <span class="n">shape_flat</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">coords_transf</span> <span class="o">=</span> <span class="n">coords_to_shape</span><span class="p">(</span><span class="n">coords_transf</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords_transf</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">is_array</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">orig_shape</span> <span class="o">+</span> <span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">return</span> <span class="n">_wrapper_func</span></div>
+
+
+<div class="viewcode-block" id="gal_to_shape"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.gal_to_shape">[docs]</a><span class="k">def</span> <span class="nf">gal_to_shape</span><span class="p">(</span><span class="n">gal</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">gal</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">deg</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">gal</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">deg</span>
+
+    <span class="n">has_dist</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gal</span><span class="o">.</span><span class="n">distance</span><span class="p">,</span> <span class="s1">&#39;kpc&#39;</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">gal</span><span class="o">.</span><span class="n">distance</span><span class="o">.</span><span class="n">kpc</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">kpc</span> <span class="k">if</span> <span class="n">has_dist</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">SkyCoord</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;galactic&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ensure_flat_galactic"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.ensure_flat_galactic">[docs]</a><span class="k">def</span> <span class="nf">ensure_flat_galactic</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A decorator for class methods of the form</span>
+<span class="sd">    .. code-block:: python</span>
+<span class="sd">        Class.method(self, coords, **kwargs)</span>
+<span class="sd">    where ``coords`` is an :obj:`astropy.coordinates.SkyCoord` object.</span>
+<span class="sd">    The decorator ensures that the ``coords`` that gets passed to</span>
+<span class="sd">    ``Class.method`` is a flat array of Galactic coordinates. It also reshapes</span>
+<span class="sd">    the output of ``Class.method`` to have the same shape (possibly scalar) as</span>
+<span class="sd">    the input ``coords``. If the output of ``Class.method`` is a tuple or list</span>
+<span class="sd">    (instead of an array), each element in the output is reshaped instead.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        f (class method): A function with the signature</span>
+<span class="sd">            ``(self, coords, **kwargs)``, where ``coords`` is a :obj:`SkyCoord`</span>
+<span class="sd">            object containing an array.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A function that takes :obj:`SkyCoord` input with any shape (including</span>
+<span class="sd">        scalar).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_wrapper_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># t0 = time.time()</span>
+
+        <span class="k">if</span> <span class="n">coords</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s1">&#39;galactic&#39;</span><span class="p">:</span>
+            <span class="n">gal</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">transform_to</span><span class="p">(</span><span class="s1">&#39;galactic&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">gal</span> <span class="o">=</span> <span class="n">coords</span>
+
+        <span class="c1"># t1 = time.time()</span>
+
+        <span class="n">is_array</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">coords</span><span class="o">.</span><span class="n">isscalar</span>
+        <span class="k">if</span> <span class="n">is_array</span><span class="p">:</span>
+            <span class="n">orig_shape</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">shape_flat</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">orig_shape</span><span class="p">),)</span>
+            <span class="c1"># print &#39;Original shape: {}&#39;.format(orig_shape)</span>
+            <span class="c1"># print &#39;Flattened shape: {}&#39;.format(shape_flat)</span>
+            <span class="n">gal</span> <span class="o">=</span> <span class="n">gal_to_shape</span><span class="p">(</span><span class="n">gal</span><span class="p">,</span> <span class="n">shape_flat</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">gal</span> <span class="o">=</span> <span class="n">gal_to_shape</span><span class="p">(</span><span class="n">gal</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+
+        <span class="c1"># t2 = time.time()</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gal</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># t3 = time.time()</span>
+
+        <span class="k">if</span> <span class="n">is_array</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="c1"># Apply to each array in output list</span>
+                <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">out</span><span class="p">:</span>
+                    <span class="n">o</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">orig_shape</span> <span class="o">+</span> <span class="n">o</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="k">else</span><span class="p">:</span>   <span class="c1"># Only one array in output</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">orig_shape</span> <span class="o">+</span> <span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+                <span class="c1"># Apply to each array in output list</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">o</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">out</span><span class="p">):</span>
+                    <span class="n">out</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">o</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>   <span class="c1"># Only one array in output</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># t4 = time.time()</span>
+
+        <span class="c1"># print(&#39;&#39;)</span>
+        <span class="c1"># print(&#39;time inside ensure_flat_galactic: {:.4f} s&#39;.format(t4-t0))</span>
+        <span class="c1"># print(&#39;{: &gt;7.4f} s : {: &gt;6.4f} s : transform_to(&quot;galactic&quot;)&#39;.format(t1-t0, t1-t0))</span>
+        <span class="c1"># print(&#39;{: &gt;7.4f} s : {: &gt;6.4f} s : reshape coordinates&#39;.format(t2-t0, t2-t1))</span>
+        <span class="c1"># print(&#39;{: &gt;7.4f} s : {: &gt;6.4f} s : execute query&#39;.format(t3-t0, t3-t2))</span>
+        <span class="c1"># print(&#39;{: &gt;7.4f} s : {: &gt;6.4f} s : reshape output&#39;.format(t4-t0, t4-t3))</span>
+        <span class="c1"># print(&#39;&#39;)</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">return</span> <span class="n">_wrapper_func</span></div>
+
+
+<div class="viewcode-block" id="ensure_flat_coords"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.ensure_flat_coords">[docs]</a><span class="k">def</span> <span class="nf">ensure_flat_coords</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A decorator for class methods of the form</span>
+<span class="sd">    .. code-block:: python</span>
+<span class="sd">        Class.method(self, coords, **kwargs)</span>
+<span class="sd">    where ``coords`` is an :obj:`astropy.coordinates.SkyCoord` object.</span>
+<span class="sd">    The decorator ensures that the ``coords`` that gets passed to</span>
+<span class="sd">    ``Class.method`` is a flat array. It also reshapes</span>
+<span class="sd">    the output of ``Class.method`` to have the same shape (possibly scalar) as</span>
+<span class="sd">    the input ``coords``. If the output of ``Class.method`` is a tuple or list</span>
+<span class="sd">    (instead of an array), each element in the output is reshaped instead.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        f (class method): A function with the signature</span>
+<span class="sd">            ``(self, coords, **kwargs)``, where ``coords`` is a :obj:`SkyCoord`</span>
+<span class="sd">            object containing an array.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A function that takes :obj:`SkyCoord` input with any shape (including</span>
+<span class="sd">        scalar).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_wrapper_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">is_array</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">coords</span><span class="o">.</span><span class="n">isscalar</span>
+
+        <span class="k">if</span> <span class="n">is_array</span><span class="p">:</span>
+            <span class="n">orig_shape</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">shape_flat</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">orig_shape</span><span class="p">),)</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape_flat</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,))</span>
+
+        <span class="c1"># t2 = time.time()</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># t3 = time.time()</span>
+
+        <span class="k">if</span> <span class="n">is_array</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="c1"># Apply to each array in output list</span>
+                <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">out</span><span class="p">:</span>
+                    <span class="n">o</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">orig_shape</span> <span class="o">+</span> <span class="n">o</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="k">else</span><span class="p">:</span>   <span class="c1"># Only one array in output</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">orig_shape</span> <span class="o">+</span> <span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+                <span class="c1"># Apply to each array in output list</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">o</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">out</span><span class="p">):</span>
+                    <span class="n">out</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">o</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>   <span class="c1"># Only one array in output</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># t4 = time.time()</span>
+
+        <span class="c1"># print(&#39;&#39;)</span>
+        <span class="c1"># print(&#39;time inside ensure_flat_galactic: {:.4f} s&#39;.format(t4-t0))</span>
+        <span class="c1"># print(&#39;{: &gt;7.4f} s : {: &gt;6.4f} s : transform_to(&quot;galactic&quot;)&#39;.format(t1-t0, t1-t0))</span>
+        <span class="c1"># print(&#39;{: &gt;7.4f} s : {: &gt;6.4f} s : reshape coordinates&#39;.format(t2-t0, t2-t1))</span>
+        <span class="c1"># print(&#39;{: &gt;7.4f} s : {: &gt;6.4f} s : execute query&#39;.format(t3-t0, t3-t2))</span>
+        <span class="c1"># print(&#39;{: &gt;7.4f} s : {: &gt;6.4f} s : reshape output&#39;.format(t4-t0, t4-t3))</span>
+        <span class="c1"># print(&#39;&#39;)</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">return</span> <span class="n">_wrapper_func</span></div>
+
+
+<div class="viewcode-block" id="web_api_method"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.web_api_method">[docs]</a><span class="k">def</span> <span class="nf">web_api_method</span><span class="p">(</span><span class="n">url</span><span class="p">,</span>
+                   <span class="n">encoder</span><span class="o">=</span><span class="n">json_serializers</span><span class="o">.</span><span class="n">get_encoder</span><span class="p">(),</span>
+                   <span class="n">decoder</span><span class="o">=</span><span class="n">json_serializers</span><span class="o">.</span><span class="n">MultiJSONDecoder</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">api_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="c1"># Collect the arguments</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getcallargs</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;self&#39;</span><span class="p">)</span>
+            <span class="n">kw</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;kwargs&#39;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+            <span class="c1"># Serialize the arguments</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">encoder</span><span class="p">)</span>
+
+            <span class="c1"># POST request to server</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;content-type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">url</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">),</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Response received from server:&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">err</span>
+
+            <span class="c1"># Deserialize the response</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">decoder</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">api_wrapper</span>
+    <span class="k">return</span> <span class="n">decorator</span></div>
+
+
+
+<div class="viewcode-block" id="DustMap"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.DustMap">[docs]</a><span class="k">class</span> <span class="nc">DustMap</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for querying dust maps. For each individual dust map, a different</span>
+<span class="sd">    subclass should be written, implementing the :obj:`query()` function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@ensure_coord_type</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        An alias for :obj:`DustMap.query`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DustMap.query"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.DustMap.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Query the map at a set of coordinates.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            coords (:obj:`astropy.coordinates.SkyCoord`): The coordinates at which to</span>
+<span class="sd">                query the map.</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            :obj:`NotImplementedError`: This function must be defined by derived</span>
+<span class="sd">                classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s1">&#39;`DustMap.query` must be implemented by subclasses.</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="s1">&#39;The `DustMap` base class should not itself be used.&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DustMap.query_gal"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.DustMap.query_gal">[docs]</a>    <span class="k">def</span> <span class="nf">query_gal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Query using Galactic coordinates.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            l (:obj:`float`, scalar or array-like): Galactic longitude, in degrees,</span>
+<span class="sd">                or as an :obj:`astropy.unit.Quantity`.</span>
+<span class="sd">            b (:obj:`float`, scalar or array-like): Galactic latitude, in degrees,</span>
+<span class="sd">                or as an :obj:`astropy.unit.Quantity`.</span>
+<span class="sd">            d (Optional[:obj:`float`, scalar or array-like]): Distance from the Solar</span>
+<span class="sd">                System, in kpc, or as an :obj:`astropy.unit.Quantity`. Defaults to</span>
+<span class="sd">                ``None``, meaning no distance is specified.</span>
+<span class="sd">            **kwargs: Any additional keyword arguments accepted by derived</span>
+<span class="sd">                classes.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The results of the query, which must be implemented by derived</span>
+<span class="sd">            classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">):</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">l</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">deg</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">):</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">deg</span>
+
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">SkyCoord</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;galactic&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">):</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">d</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">kpc</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">SkyCoord</span><span class="p">(</span>
+                <span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span>
+                <span class="n">distance</span><span class="o">=</span><span class="n">d</span><span class="p">,</span>
+                <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;galactic&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DustMap.query_equ"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.DustMap.query_equ">[docs]</a>    <span class="k">def</span> <span class="nf">query_equ</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;icrs&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Query using Equatorial coordinates. By default, the ICRS frame is used,</span>
+<span class="sd">        although other frames implemented by :obj:`astropy.coordinates` may also be</span>
+<span class="sd">        specified.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            ra (:obj:`float`, scalar or array-like): Galactic longitude, in degrees,</span>
+<span class="sd">                or as an :obj:`astropy.unit.Quantity`.</span>
+<span class="sd">            dec (`float`, scalar or array-like): Galactic latitude, in degrees,</span>
+<span class="sd">                or as an :obj:`astropy.unit.Quantity`.</span>
+<span class="sd">            d (Optional[:obj:`float`, scalar or array-like]): Distance from the Solar</span>
+<span class="sd">                System, in kpc, or as an :obj:`astropy.unit.Quantity`. Defaults to</span>
+<span class="sd">                ``None``, meaning no distance is specified.</span>
+<span class="sd">            frame (Optional[:obj:`icrs`]): The coordinate system. Can be ``&#39;icrs&#39;`` (the</span>
+<span class="sd">                default), ``&#39;fk5&#39;``, ``&#39;fk4&#39;`` or ``&#39;fk4noeterms&#39;``.</span>
+<span class="sd">            **kwargs: Any additional keyword arguments accepted by derived</span>
+<span class="sd">                classes.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The results of the query, which must be implemented by derived</span>
+<span class="sd">            classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">valid_frames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;icrs&#39;</span><span class="p">,</span> <span class="s1">&#39;fk4&#39;</span><span class="p">,</span> <span class="s1">&#39;fk5&#39;</span><span class="p">,</span> <span class="s1">&#39;fk4noeterms&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">frame</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid_frames</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;`frame` not understood. Must be one of </span><span class="si">{</span><span class="n">valid_frames</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">):</span>
+            <span class="n">ra</span> <span class="o">=</span> <span class="n">ra</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">deg</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dec</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">):</span>
+            <span class="n">dec</span> <span class="o">=</span> <span class="n">dec</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">deg</span>
+
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">SkyCoord</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;icrs&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">units</span><span class="o">.</span><span class="n">Quantity</span><span class="p">):</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">d</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">kpc</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">SkyCoord</span><span class="p">(</span>
+                <span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span>
+                <span class="n">distance</span><span class="o">=</span><span class="n">d</span><span class="p">,</span>
+                <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;icrs&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="WebDustMap"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.WebDustMap">[docs]</a><span class="k">class</span> <span class="nc">WebDustMap</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for querying dust maps through a web API. For each individual</span>
+<span class="sd">    dust map, a different subclass should be written, specifying the base URL.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">map_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the :obj:`WebDustMap` object.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            api_url (Optional[:obj:`str`]): The base URL for the API. Defaults to</span>
+<span class="sd">                ``&#39;http://argonaut.skymaps.info/api/v2/&#39;``.</span>
+<span class="sd">            map_name (Optional[:obj:`str`]): The name of the dust map to query. For</span>
+<span class="sd">                example, the Green et al. (2015) dust map is hosted at</span>
+<span class="sd">                ``http://argonaut.skymaps.info/api/v2/bayestar2015``, so the</span>
+<span class="sd">                correct specifier for that map is ``map_name=&#39;bayestar2015&#39;``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">api_url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">api_url</span> <span class="o">=</span> <span class="s1">&#39;http://argonaut.skymaps.info/api/v2/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">api_url</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">map_name</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+    <span class="nd">@ensure_coord_type</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        An alias for :obj:`WebDustMap.query()`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="WebDustMap.query"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.WebDustMap.query">[docs]</a>    <span class="nd">@ensure_coord_type</span>
+    <span class="nd">@web_api_method</span><span class="p">(</span><span class="s1">&#39;/query&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A web API version of :obj:`DustMap.query`. See the documentation for the</span>
+<span class="sd">        corresponding local query object.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            coords (:obj:`astropy.coordinates.SkyCoord`): The coordinates at which to</span>
+<span class="sd">                query the map.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="WebDustMap.query_gal"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.WebDustMap.query_gal">[docs]</a>    <span class="nd">@web_api_method</span><span class="p">(</span><span class="s1">&#39;/query&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">query_gal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A web API version of :obj:`DustMap.query_gal()`. See the documentation for</span>
+<span class="sd">        the corresponding local query object. Queries using Galactic</span>
+<span class="sd">        coordinates.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            l (:obj:`float`, scalar or array-like): Galactic longitude, in degrees,</span>
+<span class="sd">                or as an :obj:`astropy.unit.Quantity`.</span>
+<span class="sd">            b (:obj:`float`, scalar or array-like): Galactic latitude, in degrees,</span>
+<span class="sd">                or as an :obj:`astropy.unit.Quantity`.</span>
+<span class="sd">            d (Optional[:obj:`float`, scalar or array-like]): Distance from the Solar</span>
+<span class="sd">                System, in kpc, or as an :obj:`astropy.unit.Quantity`. Defaults to</span>
+<span class="sd">                ``None``, meaning no distance is specified.</span>
+<span class="sd">            **kwargs: Any additional keyword arguments accepted by derived</span>
+<span class="sd">                classes.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The results of the query.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="WebDustMap.query_equ"><a class="viewcode-back" href="../../../../grblc.convert.sfd.html#grblc.convert.sfd.map_base.WebDustMap.query_equ">[docs]</a>    <span class="nd">@web_api_method</span><span class="p">(</span><span class="s1">&#39;/query&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">query_equ</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;icrs&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A web API version of :obj:`DustMap.query_equ()`. See the documentation for</span>
+<span class="sd">        the corresponding local query object. Queries using Equatorial</span>
+<span class="sd">        coordinates. By default, the ICRS frame is used, although other frames</span>
+<span class="sd">        implemented by :obj:`astropy.coordinates` may also be specified.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            ra (:obj:`float`, scalar or array-like): Galactic longitude, in degrees,</span>
+<span class="sd">                or as an :obj:`astropy.unit.Quantity`.</span>
+<span class="sd">            dec (:obj:`float`, scalar or array-like): Galactic latitude, in degrees,</span>
+<span class="sd">                or as an :obj:`astropy.unit.Quantity`.</span>
+<span class="sd">            d (Optional[:obj:`float`, scalar or array-like]): Distance from the Solar</span>
+<span class="sd">                System, in kpc, or as an :obj:`astropy.unit.Quantity`. Defaults to</span>
+<span class="sd">                ``None``, meaning no distance is specified.</span>
+<span class="sd">            frame (Optional[icrs]): The coordinate system. Can be &#39;icrs&#39; (the</span>
+<span class="sd">                default), &#39;fk5&#39;, &#39;fk4&#39; or &#39;fk4noeterms&#39;.</span>
+<span class="sd">            **kwargs: Any additional keyword arguments accepted by derived</span>
+<span class="sd">                classes.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The results of the query.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div></div>
+</pre></div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Sam Young<br/>
+  
+      &copy; Copyright 2022, Sam Young.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

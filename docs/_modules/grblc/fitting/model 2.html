@@ -1,0 +1,846 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>grblc.fitting.model &#8212; grbLC 0.1.1 documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/thebelab-helper.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../../_static/grblc.svg" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../installation.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../../modules.html">
+   grblc
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../../grblc.html">
+     grblc package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../grblc.convert.html">
+       grblc.convert package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../grblc.fitting.html">
+       grblc.fitting package
+      </a>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../../grblc.search.html">
+       grblc.search package
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+      <label for="toctree-checkbox-3">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../grblc.search.ads.html">
+         grblc.search.ads package
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../../grblc.search.gcn.html">
+         grblc.search.gcn package
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../usage.html">
+   Usage
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../contributing.html">
+   Contributing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../authors.html">
+   Credits
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1></h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <h1>Source code for grblc.fitting.model</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;chisq&quot;</span><span class="p">,</span> <span class="s2">&quot;Model&quot;</span><span class="p">,</span> <span class="s2">&quot;Models&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="chisq"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.model.chisq">[docs]</a><span class="k">def</span> <span class="nf">chisq</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">return_reduced</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;A function to calculate the chi-squared value of a given proposed solution:</span>
+
+<span class="sd">    .. math:: \chi^2 = \sum_{i=1}^N \frac{(y_i - f(x_i))^2}{\sigma_i^2}</span>
+
+<span class="sd">    The reduced :math:`\chi^2` value, :math:`\chi^2_\nu`, can also be returned, and is calculated as:</span>
+
+<span class="sd">    .. math:: \chi^2_\nu = \frac{\chi^2}{{\rm \# ~data~ points} - {\rm \# ~free~ params}}</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x, y : array_like</span>
+<span class="sd">        The x and y values of the data points.</span>
+<span class="sd">    sigma : array_like</span>
+<span class="sd">        Standard error of the data points.</span>
+<span class="sd">    model : callable</span>
+<span class="sd">        The model to be fit to the data. Should take the form of a function that takes `x`, parameters `p`, and returns `y` in the form of ``y = model(x, *p)``.</span>
+<span class="sd">    p : array_like</span>
+<span class="sd">        List of parameter values to be used in the model.</span>
+<span class="sd">    return_reduced : bool, optional</span>
+<span class="sd">        Determines whether the reduced :math:`\chi^2` will be returned as well, by default False</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        :math:`\chi^2` for each point in the dataset, along with the reduced \(\chi^2\) value (if return_reduced=True)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">_chisq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">r</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">return_reduced</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_chisq</span><span class="p">,</span> <span class="n">_chisq</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_chisq</span></div>
+
+
+<span class="c1"># The famous Willingale et. al 2007 model</span>
+<span class="c1"># modified so T and F are logarithmic inputs</span>
+<span class="c1"># to avoid numerical overflow issues</span>
+<span class="k">def</span> <span class="nf">_w07</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+    <span class="n">before</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span>
+        <span class="o">-</span><span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="n">F</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="n">after</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">F</span> <span class="o">+</span> <span class="n">T</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">-</span> <span class="n">x</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">-</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">piecewise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">T</span><span class="p">,</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">T</span><span class="p">],</span> <span class="p">[</span><span class="n">before</span><span class="p">,</span> <span class="n">after</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">vals</span>
+
+
+<span class="c1"># modified and simplified so T and F are logarithmic inputs</span>
+<span class="c1"># to avoid numerical overflow issues.</span>
+<span class="k">def</span> <span class="nf">_simple_bpl</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">alpha1</span><span class="p">,</span> <span class="n">alpha2</span><span class="p">):</span>
+
+    <span class="n">before</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">F</span> <span class="o">-</span> <span class="n">alpha1</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">after</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">F</span> <span class="o">-</span> <span class="n">alpha2</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">piecewise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">T</span><span class="p">,</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">T</span><span class="p">],</span> <span class="p">[</span><span class="n">before</span><span class="p">,</span> <span class="n">after</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">vals</span>
+
+
+<span class="c1"># modified and simplified so T and F are logarithmic inputs</span>
+<span class="c1"># to avoid numerical overflow issues.</span>
+<span class="k">def</span> <span class="nf">_smooth_bpl</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">alpha1</span><span class="p">,</span> <span class="n">alpha2</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">F</span> <span class="o">-</span> <span class="n">alpha1</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">T</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="n">S</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">10</span><span class="o">**</span><span class="p">((</span><span class="mi">10</span><span class="o">**</span><span class="n">S</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">alpha2</span><span class="o">-</span><span class="n">alpha1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">T</span><span class="p">)))</span>
+
+
+<span class="k">class</span> <span class="nc">Parameter</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="nb">min</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+        <span class="nb">max</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+        <span class="n">vary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">plot_fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameter class for use with the :class:`Model` class.</span>
+<span class="sd">                This class is used to store the information about a parameter in a model.</span>
+<span class="sd">                Information includes the name, description, parameter priors, and whether</span>
+<span class="sd">                the parameter is to be varied in fitting.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Parameter name.</span>
+<span class="sd">        description : str, optional</span>
+<span class="sd">            Description of the parameter, by default None</span>
+<span class="sd">        min : float, optional</span>
+<span class="sd">            Minimum possible value of the parameter, by default ``-np.inf``</span>
+<span class="sd">        max : float, optional</span>
+<span class="sd">            Maximum possible value of the parameter, by default ``np.inf``</span>
+<span class="sd">        vary : bool, optional</span>
+<span class="sd">            Controls whether the variable will be allowed to vary in fitting, by default True</span>
+<span class="sd">        plot_fmt : str, optional</span>
+<span class="sd">            LaTeX form of the parameter name to be plotted, by default the same as `name`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">description</span>
+            <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="s2">&quot;Autogenerated argument from input function.&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_fmt</span> <span class="o">=</span> <span class="n">plot_fmt</span> <span class="k">if</span> <span class="n">plot_fmt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="nb">min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">max</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vary</span> <span class="o">=</span> <span class="n">vary</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;grblc Parameter&gt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">=[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="si">}</span><span class="s2">], vary=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vary</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.model.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">slug</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">func_args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Parameter</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">bounds</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Model class for use with the :class:`Lightcurve` class.</span>
+<span class="sd">                This class is a wrapper around a function that can be used to fit a lightcurve.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        func : Callable</span>
+<span class="sd">            Function to fit to.</span>
+<span class="sd">        name : str, optional</span>
+<span class="sd">            Name to the function, by default the variable name of `func`</span>
+<span class="sd">        slug : str, optional</span>
+<span class="sd">            The shortened and simplified name of the function, by default `name`</span>
+<span class="sd">        func_args : List[Parameter], optional</span>
+<span class="sd">            Function arguments in the form of a list of :class:`Parameter`, by default None</span>
+<span class="sd">        bounds : list, optional</span>
+<span class="sd">            Bounds by which `x` may be varied in fitting, by default ``[-np.inf, np.inf, -np.inf, np.inf]``</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            Makes sure all parameter names in `func_args` are actual</span>
+<span class="sd">            parameters to the function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__func</span> <span class="o">=</span> <span class="n">func</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="k">else</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slug</span> <span class="o">=</span> <span class="n">slug</span> <span class="k">if</span> <span class="n">slug</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">func_argspec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getfullargspec</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">func_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># make sure that each value of in func_args is in func_argspec</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">func_args</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">func_argspec</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; is not a valid argument for the </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> model. Expected one of </span><span class="si">{</span><span class="n">func_argspec</span><span class="si">}</span><span class="s2">.&quot;</span>
+                    <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">__func_args</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">func_args</span><span class="p">}</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># we assume 1 independent variable, and give blanket bounds to each param</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__func_args</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">name</span><span class="p">:</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getargspec</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="p">}</span>
+
+        <span class="c1"># xy bounds</span>
+        <span class="k">if</span> <span class="n">bounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;bounds must be a list of length 4&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="n">bounds</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]</span>  <span class="c1"># blanket bounds</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">func_args</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func_args</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func_args</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;grbLC&gt; Model(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__func</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">func_args</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Parameter</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__func_args</span>
+
+<div class="viewcode-block" id="Model.W07"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.model.Model.W07">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">W07</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">vary_t</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Willingale et al. (2007) model</span>
+<span class="sd">            This is a phenomenological model for GRB lightcurve afterglows</span>
+<span class="sd">            popularized in the paper by Willingale et. al, (2007). [#w07]_</span>
+
+<span class="sd">            Taken from his paper, it is as follows:</span>
+
+<span class="sd">            \[f(t) = \left \{ \begin{array}{ll}\displaystyle{F_i \exp{\left ( \alpha_i \left( 1 - \frac{t}{T_i} \right)</span>
+<span class="sd">            \right )} \exp{\left (- \frac{t_i}{t} \right )}} &amp; {\rm for} \ \ t &lt; T_i \\ ~ &amp; ~ \\</span>
+<span class="sd">            \displaystyle{F_i \left ( \frac{t}{T_i} \right )^{-\alpha_i} \exp{\left ( - \frac{t_i}{t} \right )}} &amp;</span>
+<span class="sd">            {\rm for} \ \ t \ge T_i, \\\end{array} \right .\]</span>
+
+<span class="sd">            where the transition from the exponential to the power law occurs at the</span>
+<span class="sd">            point (\(T_i\), \(F_i\)), \(\alpha\) determines the temporal decay index of the</span>
+<span class="sd">            power law, and \(t_i\) is the time of the initial rise of the lightcurve.</span>
+
+<span class="sd">            As implemented, log space is used for the time (sec) and flux</span>
+<span class="sd">            (erg cm\(^{-2}\) s\(^{-1}\)). This means that for a light curve in which the</span>
+<span class="sd">            afterglow plateau phase ends at 10,000 seconds corresponds to a \(T_i\) of 5.</span>
+
+<span class="sd">            Pre-defined priors on these parameters are:</span>
+<span class="sd">                * \(T_i\) : Uniform(1e-10, 10)</span>
+<span class="sd">                * \(F_i\) : Uniform(-20, 2)</span>
+<span class="sd">                * \(\alpha\) : Uniform(0, 5)</span>
+<span class="sd">                * \(t\) : Uniform(0, inf)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        vary_t : bool, optional</span>
+<span class="sd">            The fourth parameter to this :py:class:`Model`, `t`, often does not vary</span>
+<span class="sd">            the lightcurve in any way and thus is sometimes set to zero. This allows</span>
+<span class="sd">            the user to make the fitter not vary it. Otherwise, you can set the vary</span>
+<span class="sd">            parameter to zero via ``Model[Parameter.name].vary = False``. By default True.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`Model`</span>
+<span class="sd">            The Willingale et al. (2007) model.</span>
+
+
+<span class="sd">        An example lightcurve is shown below:</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            import matplotlib.pyplot as plt</span>
+<span class="sd">            import numpy as np</span>
+<span class="sd">            from grblc.fitting import Model</span>
+<span class="sd">            %matplotlib inline</span>
+
+<span class="sd">            w07 = Model.W07()</span>
+<span class="sd">            x = np.linspace(2, 8, 100)</span>
+<span class="sd">            T, F, alpha, t = 5, -12, 1.5, 1</span>
+<span class="sd">            y = w07(x, T, F, alpha, t)</span>
+<span class="sd">            plt.plot(x, y)</span>
+<span class="sd">            plt.title(w07.name)</span>
+<span class="sd">            plt.xlabel(&quot;log Time (s)&quot;)</span>
+<span class="sd">            plt.ylabel(&quot;log Flux (erg cm$^{-2}$ s$^{-1}$)&quot;)</span>
+<span class="sd">            plt.show()</span>
+
+
+<span class="sd">        .. [#w07] https://arxiv.org/abs/astro-ph/0612031</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Willingale 2007&quot;</span><span class="p">,</span>
+            <span class="n">slug</span><span class="o">=</span><span class="s2">&quot;w07&quot;</span><span class="p">,</span>
+            <span class="n">func</span><span class="o">=</span><span class="n">_w07</span><span class="p">,</span>
+            <span class="n">func_args</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">Parameter</span><span class="p">(</span>
+                    <span class="s2">&quot;T&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;log time at end of plateau (log sec)&quot;</span><span class="p">,</span>
+                    <span class="nb">min</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span>
+                    <span class="nb">max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">Parameter</span><span class="p">(</span>
+                    <span class="s2">&quot;F&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;log flux at end of plateau (log erg/cm^2/s)&quot;</span><span class="p">,</span>
+                    <span class="nb">min</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span>
+                    <span class="nb">max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">Parameter</span><span class="p">(</span>
+                    <span class="s2">&quot;alpha&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;temporal decay index of power law&quot;</span><span class="p">,</span>
+                    <span class="n">plot_fmt</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha$&quot;</span><span class="p">,</span>
+                    <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                    <span class="nb">max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">Parameter</span><span class="p">(</span>
+                    <span class="s2">&quot;t&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;log time at peak (log sec)&quot;</span><span class="p">,</span>
+                    <span class="nb">min</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span>
+                    <span class="nb">max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                    <span class="n">vary</span><span class="o">=</span><span class="n">vary_t</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">],</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.SMOOTH_BPL"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.model.Model.SMOOTH_BPL">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">SMOOTH_BPL</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Smooth broken power law model</span>
+<span class="sd">            This is an empirical piece-wise model for GRB lightcurve afterglows.</span>
+
+<span class="sd">            The function is as follows:</span>
+
+<span class="sd">            \[f(t) = F_i \left (\left (\frac{t}{T_i} \right )^{S\alpha_1} + \left (\frac{t}{T_i} \right )^{S \alpha_2} \right )^{-\frac{1}{S}}\]</span>
+
+<span class="sd">            where the transition from the exponential to the power law occurs at the</span>
+<span class="sd">            point (\(T_i\), \(F_i\)), \(\alpha_1\) determines the temporal decay index of</span>
+<span class="sd">            the initial power law, and \(\alpha_2\) is the temporal decay index of the</span>
+<span class="sd">            final power law, and \(S\) is the smoothing factor.</span>
+
+<span class="sd">            As implemented, log space is used for the time (sec) and flux</span>
+<span class="sd">            (erg cm\(^{-2}\) s\(^{-1}\)). This means that for a light curve in which the</span>
+<span class="sd">            afterglow plateau phase ends at 10,000 seconds corresponds to a \(T_i\) of 5.</span>
+
+<span class="sd">            Pre-defined priors on these parameters are::</span>
+<span class="sd">                * \(T_i\) : Uniform(1e-10, 10)</span>
+<span class="sd">                * \(F_i\) : Uniform(-20, 2)</span>
+<span class="sd">                * \(\alpha_1\) : Uniform(-5, 5)</span>
+<span class="sd">                * \(\alpha_2\) : Uniform(-5, 5)</span>
+<span class="sd">                * \(S\) : Uniform(-10, 2)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`Model`</span>
+<span class="sd">            The simple broken power law model.</span>
+
+
+<span class="sd">        An example lightcurve is shown below:</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            import matplotlib.pyplot as plt</span>
+<span class="sd">            import numpy as np</span>
+<span class="sd">            from grblc.fitting import Model</span>
+<span class="sd">            %matplotlib inline</span>
+
+<span class="sd">            sbpl = Model.SMOOTH_BPL()</span>
+<span class="sd">            x = np.linspace(2, 8, 100)</span>
+<span class="sd">            T, F, alpha1, alpha2, S = p = 5, -12, -0.1, 1.5, 0.5</span>
+<span class="sd">            y = sbpl(x, *p)</span>
+<span class="sd">            plt.plot(x, y)</span>
+<span class="sd">            plt.title(sbpl.name)</span>
+<span class="sd">            plt.xlabel(&quot;log Time (s)&quot;)</span>
+<span class="sd">            plt.ylabel(&quot;log Flux (erg cm\(^{-2}\) s\(^{-1}\))&quot;)</span>
+<span class="sd">            plt.show()</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;smooth broken power law&quot;</span><span class="p">,</span>
+            <span class="n">slug</span><span class="o">=</span><span class="s2">&quot;smooth_bpl&quot;</span><span class="p">,</span>
+            <span class="n">func</span><span class="o">=</span><span class="n">_smooth_bpl</span><span class="p">,</span>
+            <span class="n">func_args</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">Parameter</span><span class="p">(</span>
+                    <span class="s2">&quot;T&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;log time at end of plateau (log sec)&quot;</span><span class="p">,</span>
+                    <span class="nb">min</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+                    <span class="nb">max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">Parameter</span><span class="p">(</span>
+                    <span class="s2">&quot;F&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;log flux at end of plateau  (log erg cm^-2 s^-1)&quot;</span><span class="p">,</span>
+                    <span class="nb">min</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span>
+                    <span class="nb">max</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">Parameter</span><span class="p">(</span>
+                    <span class="s2">&quot;alpha1&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;temporal decay index of initial power law&quot;</span><span class="p">,</span>
+                    <span class="nb">min</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span>
+                    <span class="nb">max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                    <span class="n">plot_fmt</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha_1$&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">Parameter</span><span class="p">(</span>
+                    <span class="s2">&quot;alpha2&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;temporal decay index of end power law&quot;</span><span class="p">,</span>
+                    <span class="nb">min</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span>
+                    <span class="nb">max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+                    <span class="n">plot_fmt</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha_2$&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">Parameter</span><span class="p">(</span>
+                    <span class="s2">&quot;S&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;smoothing factor in log scale&quot;</span><span class="p">,</span>
+                    <span class="nb">min</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span>
+                    <span class="nb">max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">],</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.SIMPLE_BPL"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.model.Model.SIMPLE_BPL">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">SIMPLE_BPL</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Simple broken power law model</span>
+<span class="sd">            This is an empirical piece-wise model for GRB lightcurve afterglows.</span>
+
+<span class="sd">            The function is as follows:</span>
+
+<span class="sd">            \[f(t) = \left \{ \begin{array}{ll} \displaystyle{F_i \left (\frac{t}{T_i} \right)^{-\alpha_1} } &amp; {\rm for} \ \ t &lt; T_i \\ \displaystyle{F_i \left ( \frac{t}{T_i} \right )^{-\alpha_2} } &amp; {\rm for} \ \ t \ge T_i, \\ \end{array} \right . \]</span>
+
+<span class="sd">            where the transition from the exponential to the power law occurs at the point</span>
+<span class="sd">            (\(T_i\), \(F_i\)), \(\alpha_1\) determines the temporal decay index of the initial</span>
+<span class="sd">            power law, and \(\alpha_2\) is the temporal decay index of the final power law.</span>
+
+<span class="sd">            As implemented, log space is used for the time (sec) and flux</span>
+<span class="sd">            (erg cm\(^{-2}\) s\(^{-1}\)). This means that for a light curve in which the</span>
+<span class="sd">            afterglow plateau phase ends at 10,000 seconds corresponds to a \(T_i\) of 5.</span>
+
+<span class="sd">            Pre-defined priors on these parameters are:</span>
+<span class="sd">                * T : Uniform(1e-10, 10)</span>
+<span class="sd">                * F : Uniform(-20, 2)</span>
+<span class="sd">                * \(\alpha_1\) : Uniform(-5, 5)</span>
+<span class="sd">                * \(\alpha_2\) : Uniform(-5, 5)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :class:`Model`</span>
+<span class="sd">            The simple broken power law model.</span>
+
+
+<span class="sd">        An example lightcurve is shown below:</span>
+
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            import matplotlib.pyplot as plt</span>
+<span class="sd">            import numpy as np</span>
+<span class="sd">            from grblc.fitting import Model</span>
+
+<span class="sd">            sbpl = Model.SIMPLE_BPL()</span>
+<span class="sd">            x = np.linspace(2, 8, 100)</span>
+<span class="sd">            T, F, alpha1, alpha2 = p = 5, -12, -0.1, 1.5</span>
+<span class="sd">            y = sbpl(x, *p)</span>
+<span class="sd">            plt.plot(x, y)</span>
+<span class="sd">            plt.title(sbpl.name)</span>
+<span class="sd">            plt.xlabel(&quot;log Time (s)&quot;)</span>
+<span class="sd">            plt.ylabel(&quot;log Flux (erg cm$^{-2}$ s$^{-1}$)&quot;)</span>
+<span class="sd">            plt.show()</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;simple broken power law&quot;</span><span class="p">,</span>
+            <span class="n">slug</span><span class="o">=</span><span class="s2">&quot;simple_bpl&quot;</span><span class="p">,</span>
+            <span class="n">func</span><span class="o">=</span><span class="n">_simple_bpl</span><span class="p">,</span>
+            <span class="n">func_args</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">Parameter</span><span class="p">(</span>
+                    <span class="s2">&quot;T&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;log time at end of plateau (log sec)&quot;</span><span class="p">,</span>
+                    <span class="nb">min</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+                    <span class="nb">max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">Parameter</span><span class="p">(</span>
+                    <span class="s2">&quot;F&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;log flux at end of plateau  (log erg cm^-2 s^-1)&quot;</span><span class="p">,</span>
+                    <span class="nb">min</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span>
+                    <span class="nb">max</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">Parameter</span><span class="p">(</span>
+                    <span class="s2">&quot;alpha1&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;temporal decay index of initial power law&quot;</span><span class="p">,</span>
+                    <span class="nb">min</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span>
+                    <span class="nb">max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                    <span class="n">plot_fmt</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha_1$&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">Parameter</span><span class="p">(</span>
+                    <span class="s2">&quot;alpha2&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;temporal decay index of end power law&quot;</span><span class="p">,</span>
+                    <span class="nb">min</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span>
+                    <span class="nb">max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+                    <span class="n">plot_fmt</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha_2$&quot;</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">],</span>
+        <span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="Models"><a class="viewcode-back" href="../../../grblc.fitting.html#grblc.fitting.model.Models">[docs]</a><span class="k">class</span> <span class="nc">Models</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Collection of models to fit together.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">models</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Model</span><span class="p">]):</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Must have at least one model.&quot;</span>
+        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">Model</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">models</span><span class="p">),</span> <span class="s2">&quot;All elements must be models.&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">models</span><span class="p">]</span>
+
+        <span class="n">arg_names</span><span class="p">,</span> <span class="n">model_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="nb">list</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">func_args</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="p">)]</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">model</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">arg_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">arg_names</span><span class="p">)</span>
+        <span class="n">model_idx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">model_idx</span><span class="p">))</span>
+        <span class="c1"># make sure no collisions in model parameters</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">arg_names</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg_names</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">model_id</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">arg_names</span><span class="p">,</span> <span class="n">model_idx</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">arg_names</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># warnings.warn(f&quot;{name} is used in multiple models. Renaming parameters in ascending order.&quot;)</span>
+                    <span class="n">new_name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">arg_names</span><span class="p">[:</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">model_id</span><span class="p">]</span><span class="o">.</span><span class="n">func_args</span><span class="p">[</span><span class="n">new_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">model_id</span><span class="p">]</span><span class="o">.</span><span class="n">func_args</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">model_id</span><span class="p">]</span><span class="o">.</span><span class="n">func_args</span><span class="p">[</span><span class="n">new_name</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">new_name</span>
+
+        <span class="n">merge_dict</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">:</span> <span class="p">{</span><span class="o">**</span><span class="n">d1</span><span class="p">,</span> <span class="o">**</span><span class="n">d2</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__func_args</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">merge_dict</span><span class="p">,</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">func_args</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">])</span>
+        <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span> <span class="o">=</span> <span class="p">[</span><span class="nb">min</span><span class="p">([</span><span class="n">models</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">))])</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+        <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="p">[</span><span class="nb">max</span><span class="p">([</span><span class="n">models</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">))])</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot; + &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slug</span> <span class="o">=</span> <span class="s2">&quot;+&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">model</span><span class="o">.</span><span class="n">slug</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">])</span>
+
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">targs</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
+            <span class="n">nargs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">[</span><span class="n">targs</span><span class="p">:</span><span class="n">targs</span><span class="o">+</span><span class="n">nargs</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">targs</span> <span class="o">+=</span> <span class="n">nargs</span>
+
+        <span class="k">return</span> <span class="n">ans</span>
+
+    <span class="n">__func</span> <span class="o">=</span> <span class="fm">__call__</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">func_args</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Parameter</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__func_args</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">func_args</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func_args</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func_args</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;grbLC&gt; Models(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__func</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">func_args</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Parameter</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__func_args</span></div>
+</pre></div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Sam Young<br/>
+  
+      &copy; Copyright 2022, Sam Young.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

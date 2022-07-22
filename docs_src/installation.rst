@@ -8,11 +8,11 @@ Installation
 Stable release
 --------------
 
-To install grbLC, run this command in your terminal:
+To install grbLC, first make sure that your Github account has joined the SLAC-Gamma-Rays organization, then run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install grblc
+    $ pip install git+https://github.com/SLAC-Gamma-Rays/grbLC
 
 This is the preferred method to install grbLC, as it will always install the most recent stable release.
 
@@ -23,29 +23,11 @@ you through the process.
 .. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
 
 
-From sources
-------------
+Update your local Installation
+--------------
 
-The sources for grbLC can be downloaded from the `Github repo`_.
-
-You can either clone the public repository:
+Similarly, if grbLC has been updated and you'd like to use those changes, run this command in your terminal:
 
 .. code-block:: console
 
-    $ git clone git://github.com/youngsm/grblc
-
-Or download the `tarball`_:
-
-.. code-block:: console
-
-    $ curl -OJL https://github.com/youngsm/grblc/tarball/master
-
-Once you have a copy of the source, you can install it with:
-
-.. code-block:: console
-
-    $ python setup.py install
-
-
-.. _Github repo: https://github.com/youngsm/grblc
-.. _tarball: https://github.com/youngsm/grblc/tarball/master
+    $ pip install -U git+https://github.com/SLAC-Gamma-Rays/grbLC

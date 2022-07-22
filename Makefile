@@ -77,6 +77,7 @@ docs: ## generate Sphinx HTML documentation, including API docs
 	cp -r docs_src/_build/html/* docs
 	touch docs/.nojekyll
 	rm -rf docs_src/_build/html/
+	echo grblc.youngsam.me > docs/CNAME
 	$(BROWSER) docs/index.html
 
 servedocs: docs ## compile the docs watching for changes
